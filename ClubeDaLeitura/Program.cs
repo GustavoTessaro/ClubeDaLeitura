@@ -114,7 +114,11 @@ class Program
                                 }
                                 break;
                             case 3:
-
+                                verifica = usuario.ExcluirCaixa();
+                                if (verifica == true)
+                                {
+                                    salvarUsuario(usuario);
+                                }
                                 break;
                             case 4:
                                 usuario.MostrarCaixasCadastradas();

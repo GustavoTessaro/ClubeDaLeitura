@@ -4,7 +4,6 @@ class Usuario
     private string nome;
     private string senha;
     private List<Caixa> caixas;
-
     private List<Amigo> amigos;
     private List<Emprestimo> emprestimos;
 
@@ -205,7 +204,6 @@ class Usuario
             return true;
         }
     }
-
     public bool ExcluirCaixa()
     {
         bool verificaLista = MostrarCaixasCadastradas();
