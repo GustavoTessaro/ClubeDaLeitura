@@ -179,6 +179,18 @@ class Usuario
             return false;
         }
 
+        if (caixas.Count != 0)
+        {
+            foreach (var caixaV in caixas)
+            {
+                if (caixaV.GetEtiqueta().ToLower() == Etiqueta.ToLower())
+                {
+                    Console.WriteLine("Caixa já cadastrada com o nome " + Etiqueta + " Por favor, tente novamente!");
+                    return false;
+                }
+            }
+        }
+
         Caixa caixa = new Caixa(Etiqueta, Cor, DiasDeEmprestimo);
 
         caixas.Add(caixa);
@@ -191,7 +203,7 @@ class Usuario
     {
         if (caixas.Count == 0)
         {
-            Console.WriteLine("Nenhum equipamento cadastrado.");
+            Console.WriteLine("Nenhuma caixa cadastrada.");
             return false;
         }
         else
@@ -352,6 +364,86 @@ class Usuario
                         Console.WriteLine("Erro, verifique se os parêmetros foram passados corretamente!");
                         verifica = false;
                     }
+                }
+                else
+                {
+                    Console.WriteLine("Etiqueta não encontrada, tente novamente!");
+                    verifica = false;
+                }
+            }
+            return verifica;
+        }
+        else
+        {
+            Console.WriteLine("Nome da Etiqueta Vazia, por favor tente novamente!");
+            return verifica;
+        }
+    }
+
+    #endregion
+
+    #region Métodos Revista
+
+    public bool CadastrarRevista()
+    {
+        bool verificaLista = MostrarCaixasCadastradas();
+
+        if (verificaLista == false)
+        {
+            return false;
+        }
+
+        string selecionarCaixa = "";
+        bool verifica = false;
+
+        Console.Write("Digite a Etiqueta da Caixa que deseja Cadastrar a Revista: ");
+        selecionarCaixa = Console.ReadLine() ?? "";
+
+        if (selecionarCaixa != "")
+        {
+            foreach (var caixa in caixas.ToList())
+            {
+                if (selecionarCaixa.ToLower() == caixa.GetEtiqueta().ToLower())
+                {
+                    verifica = caixa.CadastrarRevista();
+                }
+                else
+                {
+                    Console.WriteLine("Etiqueta não encontrada, tente novamente!");
+                    verifica = false;
+                }
+            }
+            return verifica;
+        }
+        else
+        {
+            Console.WriteLine("Nome da Etiqueta Vazia, por favor tente novamente!");
+            return verifica;
+        }
+    }
+
+    public bool EditarRevista()
+    {
+        bool verificaLista = MostrarCaixasCadastradas();
+
+        if (verificaLista == false)
+        {
+            return false;
+        }
+
+        string selecionarCaixa = "";
+        bool verifica = false;
+
+        Console.Write("Digite a Etiqueta da Caixa que deseja Editar a Revista: ");
+        selecionarCaixa = Console.ReadLine() ?? "";
+
+        if (selecionarCaixa != "")
+        {
+            foreach (var caixa in caixas.ToList())
+            {
+                if (selecionarCaixa.ToLower() == caixa.GetEtiqueta().ToLower())
+                {
+                    verifica = caixa.EditarRevista();
                 }
                 else
                 {

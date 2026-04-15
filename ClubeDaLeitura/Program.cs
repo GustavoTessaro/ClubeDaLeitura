@@ -3,13 +3,11 @@
 class Program
 {
     static string nomeArquivo = "usuario.json";
-
     static void salvarUsuario(Usuario usuario)
     {
         string jsonString = JsonSerializer.Serialize(usuario, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText("usuario.json", jsonString);
     }
-
     static Usuario lerUsuario()
     {
         if (File.Exists("usuario.json"))
@@ -19,7 +17,6 @@ class Program
         }
         return new Usuario();
     }
-
     static int ObterEscolhaMenuPrincipal()
     {
         int opcao = 0;
@@ -41,7 +38,6 @@ class Program
 
         return opcao;
     }
-
     static int ObterEscolhaMenuCaixas()
     {
         int opcao = 0;
@@ -63,9 +59,29 @@ class Program
 
         return opcao;
     }
+    static int ObterEscolhaMenuRevistas()
+    {
+        int opcao = 0;
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Gestão de Revistas");
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("1 - Cadastrar Revista");
+            Console.WriteLine("2 - Editar Revista");
+            Console.WriteLine("3 - Excluir Revista");
+            Console.WriteLine("4 - Visualizar Revista");
+            Console.WriteLine("5 - Voltar para o início");
+            Console.WriteLine("---------------------------------");
+            Console.Write("> ");
+            opcao = (int)char.GetNumericValue(Console.ReadKey(true).KeyChar);
+        } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5);
+
+        return opcao;
+    }
     static void Main(string[] args)
     {
-
         Usuario usuario = lerUsuario();
 
         string nome = "";
@@ -91,7 +107,7 @@ class Program
                     #region Gestão de Caixas
 
                     int opcaoCaixas = 0;
-                    bool verifica = false;
+                    bool verificaCaixas = false;
 
                     do
                     {
@@ -100,22 +116,22 @@ class Program
                         switch (opcaoCaixas)
                         {
                             case 1:
-                                verifica = usuario.CadastrarCaixa();
-                                if (verifica == true)
+                                verificaCaixas = usuario.CadastrarCaixa();
+                                if (verificaCaixas == true)
                                 {
                                     salvarUsuario(usuario);
                                 }
                                 break;
                             case 2:
-                                verifica = usuario.EditarCaixa();
-                                if (verifica == true)
+                                verificaCaixas = usuario.EditarCaixa();
+                                if (verificaCaixas == true)
                                 {
                                     salvarUsuario(usuario);
                                 }
                                 break;
                             case 3:
-                                verifica = usuario.ExcluirCaixa();
-                                if (verifica == true)
+                                verificaCaixas = usuario.ExcluirCaixa();
+                                if (verificaCaixas == true)
                                 {
                                     salvarUsuario(usuario);
                                 }
@@ -136,8 +152,52 @@ class Program
                     #endregion
                     break;
                 case 2:
+                    #region Gestão de Revistas
 
+                    int opcaoRevistas = 0;
+                    bool verificaRevistas = false;
 
+                    do
+                    {
+                        opcaoRevistas = ObterEscolhaMenuRevistas();
+
+                        switch (opcaoRevistas)
+                        {
+                            case 1:
+                                verificaRevistas = usuario.CadastrarRevista();
+                                if (verificaRevistas == true)
+                                {
+                                    salvarUsuario(usuario);
+                                }
+                                break;
+                            case 2:
+                                verificaRevistas = usuario.EditarRevista();
+                                if (verificaRevistas == true)
+                                {
+                                    salvarUsuario(usuario);
+                                }
+                                break;
+                            case 3:
+                                verificaRevistas = usuario.ExcluirCaixa();
+                                if (verificaRevistas == true)
+                                {
+                                    salvarUsuario(usuario);
+                                }
+                                break;
+                            case 4:
+                                usuario.MostrarCaixasCadastradas();
+                                break;
+                            case 5:
+                                Console.WriteLine("Voltando...");
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
+                                break;
+                        }
+
+                    } while (opcaoRevistas != 5);
+
+                    #endregion
                     break;
                 case 3:
 
