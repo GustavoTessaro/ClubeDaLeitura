@@ -421,7 +421,43 @@ class Usuario
             return verifica;
         }
     }
+    public bool MostrarRevistasCadastradas()
+    {
+        bool verificaLista = MostrarCaixasCadastradas();
 
+        if (verificaLista == false)
+        {
+            return false;
+        }
+
+        string selecionarCaixa = "";
+        bool verifica = false;
+
+        Console.Write("Digite a Etiqueta da Caixa que deseja visualizar as Revistas: ");
+        selecionarCaixa = Console.ReadLine() ?? "";
+
+        if (selecionarCaixa != "")
+        {
+            foreach (var caixa in caixas.ToList())
+            {
+                if (selecionarCaixa.ToLower() == caixa.GetEtiqueta().ToLower())
+                {
+                    verifica = caixa.MostrarRevistasCadastradas();
+                }
+                else
+                {
+                    Console.WriteLine("Etiqueta não encontrada, tente novamente!");
+                    verifica = false;
+                }
+            }
+            return verifica;
+        }
+        else
+        {
+            Console.WriteLine("Nome da Etiqueta Vazia, por favor tente novamente!");
+            return verifica;
+        }
+    }
     public bool EditarRevista()
     {
         bool verificaLista = MostrarCaixasCadastradas();
@@ -444,6 +480,43 @@ class Usuario
                 if (selecionarCaixa.ToLower() == caixa.GetEtiqueta().ToLower())
                 {
                     verifica = caixa.EditarRevista();
+                }
+                else
+                {
+                    Console.WriteLine("Etiqueta não encontrada, tente novamente!");
+                    verifica = false;
+                }
+            }
+            return verifica;
+        }
+        else
+        {
+            Console.WriteLine("Nome da Etiqueta Vazia, por favor tente novamente!");
+            return verifica;
+        }
+    }
+    public bool ExcluirRevista()
+    {
+        bool verificaLista = MostrarCaixasCadastradas();
+
+        if (verificaLista == false)
+        {
+            return false;
+        }
+
+        string selecionarCaixa = "";
+        bool verifica = false;
+
+        Console.Write("Digite a Etiqueta da Caixa que deseja Excluir a Revista: ");
+        selecionarCaixa = Console.ReadLine() ?? "";
+
+        if (selecionarCaixa != "")
+        {
+            foreach (var caixa in caixas.ToList())
+            {
+                if (selecionarCaixa.ToLower() == caixa.GetEtiqueta().ToLower())
+                {
+                    verifica = caixa.ExcluirRevista();
                 }
                 else
                 {

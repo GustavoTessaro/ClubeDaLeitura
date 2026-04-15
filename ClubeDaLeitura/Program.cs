@@ -178,14 +178,14 @@ class Program
                                 }
                                 break;
                             case 3:
-                                verificaRevistas = usuario.ExcluirCaixa();
+                                verificaRevistas = usuario.ExcluirRevista();
                                 if (verificaRevistas == true)
                                 {
                                     salvarUsuario(usuario);
                                 }
                                 break;
                             case 4:
-                                usuario.MostrarCaixasCadastradas();
+                                usuario.MostrarRevistasCadastradas();
                                 break;
                             case 5:
                                 Console.WriteLine("Voltando...");
@@ -203,7 +203,7 @@ class Program
 
                     break;
                 case 4:
-
+            
                     break;
                 case 5:
                     Console.WriteLine("Fechando o Programa...");

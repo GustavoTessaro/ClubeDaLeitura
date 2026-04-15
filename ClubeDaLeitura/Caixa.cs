@@ -120,7 +120,6 @@ class Caixa
 
         return true;
     }
-
     public bool MostrarRevistasCadastradas()
     {
         if (revistas.Count == 0)
@@ -138,7 +137,62 @@ class Caixa
             return true;
         }
     }
+    public bool ExcluirRevista()
+    {
+        bool verificaLista = MostrarRevistasCadastradas();
 
+        if (verificaLista == false)
+        {
+            return false;
+        }
+
+        string selecionarRevista = "";
+        bool verifica = false;
+
+        Console.Write("Digite o Título da Revista que deseja Excluir: ");
+        selecionarRevista = Console.ReadLine() ?? "";
+
+        if (selecionarRevista != "")
+        {
+            foreach (var revista in revistas.ToList())
+            {
+                if (selecionarRevista.ToLower() == revista.getTitulo().ToLower())
+                {
+                    Console.Write("Tem certeza que deseja excluir a revista " + revista.getTitulo + " (S/N)?");
+                    char resposta = char.ToUpper(Console.ReadKey(true).KeyChar);
+
+                    if (resposta == 'S')
+                    {
+                        revistas.Remove(revista);
+                        Console.WriteLine("Revista removida com sucesso!");
+                        Thread.Sleep(3000);
+                        while (Console.KeyAvailable) Console.ReadKey(true);
+                        Console.Clear();
+                        verifica = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Operação Cancelada...");
+                        Thread.Sleep(3000);
+                        while (Console.KeyAvailable) Console.ReadKey(true);
+                        Console.Clear();
+                        verifica = false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Revista não encontrada, tente novamente!");
+                    verifica = false;
+                }
+            }
+            return verifica;
+        }
+        else
+        {
+            Console.WriteLine("Nome da Revista Vazia, por favor tente novamente!");
+            return verifica;
+        }
+    }
     public int EscolherEditarRevista()
     {
         int opcao = 0;
@@ -219,7 +273,7 @@ class Caixa
 
                                 Console.Write("Digite a nova data de publicação da revista (dd/MM/yyyy): ");
                                 AnoPublicacaoNovo = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
-                                
+
                                 if (TituloNovo != "")
                                 {
                                     revista.setTitulo(TituloNovo);
