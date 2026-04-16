@@ -240,21 +240,21 @@ class Program
                                 }
                                 break;
                             case 2:
-                                verificaCaixas = usuario.EditarCaixa();
+                                verificaCaixas = usuario.EditarAmigo();
                                 if (verificaAmigos == true)
                                 {
                                     salvarUsuario(usuario);
                                 }
                                 break;
                             case 3:
-                                verificaCaixas = usuario.ExcluirCaixa();
+                                verificaCaixas = usuario.ExcluirAmigo();
                                 if (verificaAmigos == true)
                                 {
                                     salvarUsuario(usuario);
                                 }
                                 break;
                             case 4:
-                                usuario.MostrarCaixasCadastradas();
+                                usuario.MostrarAmigosCadastrados();
                                 break;
                             case 5:
                                 Console.WriteLine("Voltando...");

@@ -554,7 +554,84 @@ class Usuario
             return true;
         }
     }
+    public bool ExcluirAmigo()
+    {
+        bool verificaLista = MostrarAmigosCadastrados();
 
+        if (verificaLista == false)
+        {
+            return false;
+        }
+
+        string selecionarAmigo = "";
+        bool verifica = false;
+
+        Console.Write("Digite o nome do Amigo que deseja Excluir: ");
+        selecionarAmigo = Console.ReadLine() ?? "";
+
+        if (selecionarAmigo != "")
+        {
+            foreach (var amigo in amigos.ToList())
+            {
+                if (selecionarAmigo.ToLower() == amigo.getNome().ToLower())
+                {
+
+                    bool verificaListaEmprestimo = false;
+
+                    foreach (var emprestimo in emprestimos)
+                    {
+                        if (emprestimo.getAmigo().ToLower() == amigo.getNome().ToLower() && emprestimo.getStatus().ToLower() != "Concluído")
+                        {
+                            verificaListaEmprestimo = true;
+                        }
+                    }
+
+                    if (verificaListaEmprestimo == false)
+                    {
+                        Console.Write("Tem certeza que deseja excluir o amigo " + amigo.getNome() + " (S/N)?");
+                        char resposta = char.ToUpper(Console.ReadKey(true).KeyChar);
+
+                        if (resposta == 'S')
+                        {
+                            amigos.Remove(amigo);
+                            Console.WriteLine("Amigo removido com sucesso!");
+                            Thread.Sleep(3000);
+                            while (Console.KeyAvailable) Console.ReadKey(true);
+                            Console.Clear();
+                            verifica = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Operação Cancelada...");
+                            Thread.Sleep(3000);
+                            while (Console.KeyAvailable) Console.ReadKey(true);
+                            Console.Clear();
+                            verifica = false;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Você não pode remover um Amigo sem antes REMOVER os empréstimos dele!");
+                        Thread.Sleep(3000);
+                        while (Console.KeyAvailable) Console.ReadKey(true);
+                        Console.Clear();
+                        verifica = false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Amigo não encontrado, tente novamente!");
+                    verifica = false;
+                }
+            }
+            return verifica;
+        }
+        else
+        {
+            Console.WriteLine("Nome da Etiqueta Vazia, por favor tente novamente!");
+            return verifica;
+        }
+    }
     public bool CadastrarAmigo()
     {
         string Nome = "";
@@ -601,6 +678,177 @@ class Usuario
         {
             Console.WriteLine("Nome dos campos Vazia, por favor tente novamente!");
             return false;
+        }
+    }
+
+    public int EscolherEditarAmigo()
+    {
+
+        int opcao = 0;
+
+        do
+        {
+            Console.WriteLine("Digite uma Opção para Editar: ");
+            Console.WriteLine("1 - Editar Nome");
+            Console.WriteLine("2 - Editar Nome Responsável");
+            Console.WriteLine("3 - Editar Telefone");
+            Console.WriteLine("4 - Editar Tudo");
+            Console.WriteLine("5 - Voltar");
+            opcao = (int)char.GetNumericValue(Console.ReadKey(true).KeyChar);
+        } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5);
+
+        return opcao;
+    }
+    public bool EditarAmigo()
+    {
+        bool verificaLista = MostrarAmigosCadastrados();
+
+        if (verificaLista == false)
+        {
+            return false;
+        }
+
+        string selecionarAmigo = "";
+        bool verifica = false;
+
+        Console.Write("Digite o nome do amigo que deseja Editar: ");
+        selecionarAmigo = Console.ReadLine() ?? "";
+
+        if (selecionarAmigo != "")
+        {
+            foreach (var amigo in amigos.ToList())
+            {
+                if (selecionarAmigo.ToLower() == amigo.getNome().ToLower())
+                {
+                    int opcao = EscolherEditarAmigo();
+
+                    try
+                    {
+                        switch (opcao)
+                        {
+                            case 1:
+                                string nome = "";
+                                Console.WriteLine("Digite um novo nome para o Amigo: ");
+                                nome = Console.ReadLine() ?? "";
+                                if (nome != "")
+                                {
+                                    amigo.setNome(nome);
+
+                                    if (emprestimos.Count != 0)
+                                    {
+                                        foreach (var emprestimo in emprestimos)
+                                        {
+                                            if (emprestimo.getAmigo().ToLower() == amigo.getNome().ToLower())
+                                            {
+                                                emprestimo.setAmigo(amigo.getNome());
+                                            }
+                                        }
+                                    }
+
+                                    verifica = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Nome do Amigo Vazia, por favor tente novamente!");
+                                    verifica = false;
+                                }
+                                break;
+                            case 2:
+                                string NomeResponsavel = "";
+                                Console.WriteLine("Digite um novo nome do responsavel para o Amigo: ");
+                                NomeResponsavel = Console.ReadLine() ?? "";
+
+                                if (NomeResponsavel != "")
+                                {
+                                    amigo.setNomeResponsavel(NomeResponsavel);
+
+                                    verifica = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Nome do Amigo Vazia, por favor tente novamente!");
+                                    verifica = false;
+                                }
+                                break;
+                            case 3:
+                                Console.Write("Digite o novo número de telefone do amigo: ");
+                                string Telefone = Console.ReadLine();
+
+                                if (Telefone != "")
+                                {
+                                    amigo.setTelefone(Telefone);
+
+                                    verifica = false;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Telefone do Amigo Vazia, por favor tente novamente!");
+                                    verifica = false;
+                                }
+
+                                break;
+                            case 4:
+                                string nomeNovo = "";
+                                Console.WriteLine("Digite um novo nome para o Amigo: ");
+                                nomeNovo = Console.ReadLine() ?? "";
+                                string NomeResponsavelNovo = "";
+                                Console.WriteLine("Digite um novo nome do responsavel para o Amigo: ");
+                                NomeResponsavelNovo = Console.ReadLine() ?? "";
+                                Console.Write("Digite o novo número de telefone do amigo: ");
+                                string TelefoneNovo = Console.ReadLine() ?? "";
+
+                                if (nomeNovo != "" && NomeResponsavelNovo != "" && TelefoneNovo != "")
+                                {
+                                    amigo.setNome(nomeNovo);
+                                    amigo.setNomeResponsavel(NomeResponsavelNovo);
+                                    amigo.setTelefone(TelefoneNovo);
+
+                                    if (emprestimos.Count != 0)
+                                    {
+                                        foreach (var emprestimo in emprestimos)
+                                        {
+                                            if (emprestimo.getAmigo().ToLower() == amigo.getNome().ToLower())
+                                            {
+                                                emprestimo.setAmigo(amigo.getNome());
+                                            }
+                                        }
+                                    }
+
+                                    verifica = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Parâmetros Vazia, por favor tente novamente!");
+                                    verifica = false;
+                                }
+                                break;
+                            case 5:
+                                Console.WriteLine("Voltando...");
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
+                                verifica = false;
+                                break;
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        Console.WriteLine("Erro, verifique se os parêmetros foram passados corretamente!");
+                        verifica = false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Amigo não encontrado, tente novamente!");
+                    verifica = false;
+                }
+            }
+            return verifica;
+        }
+        else
+        {
+            Console.WriteLine("Nome do Amigo Vazia, por favor tente novamente!");
+            return verifica;
         }
     }
 
