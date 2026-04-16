@@ -908,7 +908,6 @@ class Usuario
     #endregion
 
     #region Métodos Emprestimo
-
     public bool VerificarEmprestimos()
     {
         if (emprestimos.Count == 0)
