@@ -86,6 +86,18 @@ class Usuario
 
     #region Métodos Caixa
 
+    public bool verificarCaixasCadastradas()
+    {
+        if (caixas.Count == 0)
+        {
+            Console.WriteLine("Nenhuma caixa cadastrada.");
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
     public string EscolherCor(string nome)
     {
 
@@ -533,6 +545,27 @@ class Usuario
         }
     }
 
+    public string MostrarTodasAsRevistasCadastradas(string amigo)
+    {
+        bool verificaLista = verificarCaixasCadastradas();
+
+        if (verificaLista == false)
+        {
+            return "";
+        }
+
+        foreach (var caixa in caixas)
+        {
+            caixa.MostrarRevistasCadastradasSemMensagem();
+        }
+
+        Console.Write($"Digite o nome da revista que o amigo {amigo} fará o Empréstimo: ");
+        string Revista = Console.ReadLine() ?? "";
+
+        return Revista;
+
+    }
+
     #endregion
 
     #region Métodos Amigo
@@ -848,6 +881,128 @@ class Usuario
         {
             Console.WriteLine("Nome do Amigo Vazia, por favor tente novamente!");
             return verifica;
+        }
+    }
+
+    #endregion
+
+    #region Métodos Emprestimo
+
+    public bool CadastrarEmprestimo()
+    {
+        string Amigo = "";
+        string Revista = "";
+        int DiasEmprestimo = 0;
+
+        bool verificaAmigo = false;
+        bool verificaRevista = false;
+
+        try
+        {
+            verificaAmigo = MostrarAmigosCadastrados();
+
+            if (verificaAmigo == true)
+            {
+                Console.Write("Digite o nome do Amigo que fará o Empréstimo: ");
+                Amigo = Console.ReadLine() ?? "";
+
+                if (Amigo != "")
+                {
+                    foreach (var amigo in amigos)
+                    {
+                        if (amigo.getNome().ToLower() == Amigo.ToLower())
+                        {
+                            Revista = MostrarTodasAsRevistasCadastradas(amigo.getNome());
+
+                            if (Revista != "")
+                            {
+                                int verificarDiasEmprestimos = 0;
+
+                                foreach (var caixa in caixas)
+                                {
+                                    verificarDiasEmprestimos = caixa.verificaRevista(Revista);
+
+                                    if (verificarDiasEmprestimos > 0)
+                                    {
+                                        DiasEmprestimo = verificarDiasEmprestimos;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Revista não Encontrada, tente novamente!");
+                                return false;
+                            }
+
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Amigo não Encontrado, tente novamente!");
+                    return false;
+                }
+
+            }
+        }
+        catch (System.Exception)
+        {
+            Console.WriteLine("Erro, verifique se os parêmetros foram passados corretamente!");
+            return false;
+        }
+
+        if (Amigo != "" && Revista != "" && DiasEmprestimo > 0)
+        {
+            Emprestimo emprestimo = new Emprestimo(Amigo, Revista, DiasEmprestimo);
+
+            emprestimos.Add(emprestimo);
+            Console.WriteLine("Emrpestimo cadastrado com sucesso!");
+
+            return true;
+        }
+        else
+        {
+            Console.WriteLine("Nome dos campos Vazia, por favor tente novamente!");
+            return false;
+        }
+    }
+
+    public bool CadastrarDevolucao()
+    {
+        
+    }
+    public bool MostrarEmprestimosCadastrados()
+    {
+        if (emprestimos.Count == 0)
+        {
+            Console.WriteLine("Nenhum empréstimo cadastrado.");
+            return false;
+        }
+        else
+        {
+            Console.WriteLine("Empréstimos cadastrados:");
+            foreach (var emprestimo in emprestimos)
+            {
+                if (emprestimo.getStatus() == "Concluído")
+                {
+                    Console.WriteLine($"Amigo: {emprestimo.getAmigo}, Revista: {emprestimo.getRevista}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data Devolvida: {emprestimo.getDataDevolvido().ToString("dd/MM/yyyy")}, Status: {emprestimo.getStatus()}");
+                }
+                else
+                {
+                    if (emprestimo.getStatus() == "Aberto")
+                    {
+                        Console.WriteLine($"Amigo: {emprestimo.getAmigo}, Revista: {emprestimo.getRevista}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data a ser Devolvida: {emprestimo.getDataDevolucao().ToString("dd/MM/yyyy")}, Status: {emprestimo.getStatus()}");
+                    }
+                    else
+                    {
+                        if (emprestimo.getStatus() == "Atrasado")
+                        {
+                            Console.WriteLine($"Amigo: {emprestimo.getAmigo}, Revista: {emprestimo.getRevista}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data que deveria ser Devolvida: {emprestimo.getDataDevolucao().ToString("dd/MM/yyyy")}, Dias em Atraso: {emprestimo.DiasEmAtraso()}, Status: {emprestimo.getStatus()}");
+                        }
+                    }
+                }
+            }
+            return true;
         }
     }
 

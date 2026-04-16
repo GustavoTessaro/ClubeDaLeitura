@@ -120,6 +120,29 @@ class Caixa
 
         return true;
     }
+
+    public int verificaRevista(string nome)
+    {
+        foreach(var revista in revistas)
+        {
+            if(revista.getTitulo().ToLower() == nome.ToLower())
+            {
+                revista.setStatus("Aberto");
+                return this.DiasEmprestimo;
+            }
+        }
+        return 0;
+    }
+    public void MostrarRevistasCadastradasSemMensagem()
+    {
+        if (revistas.Count != 0)
+        {
+            foreach (var revista in revistas)
+            {
+                Console.WriteLine($"Título: {revista.getTitulo}, Número da Edição: {revista.getNumeroDaEdicao}, Data da Publicação: {revista.getAnoPublicacao().ToString("dd/MM/yyyy")}, Status: {revista.getStatus()}");
+            }
+        }
+    }
     public bool MostrarRevistasCadastradas()
     {
         if (revistas.Count == 0)
@@ -132,7 +155,7 @@ class Caixa
             Console.WriteLine("Caixas cadastradas:");
             foreach (var revista in revistas)
             {
-                Console.WriteLine($"Título: {revista.getTitulo}, Número da Edição: {revista.getNumeroDaEdicao}, Data da Publicação: {revista.getAnoPublicacao().ToString("dd/MM/yyyy")}");
+                Console.WriteLine($"Título: {revista.getTitulo}, Número da Edição: {revista.getNumeroDaEdicao}, Data da Publicação: {revista.getAnoPublicacao().ToString("dd/MM/yyyy")}, Status: {revista.getStatus()}");
             }
             return true;
         }

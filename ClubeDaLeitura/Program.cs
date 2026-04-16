@@ -301,25 +301,21 @@ class Program
                         switch (opcaoEmprestimo)
                         {
                             case 1:
-                                verificaEmprestimo = usuario.CadastrarAmigo();
+                                verificaEmprestimo = usuario.CadastrarEmprestimo();
                                 if (verificaEmprestimo == true)
                                 {
                                     salvarUsuario(usuario);
                                 }
                                 break;
                             case 2:
-                                verificaEmprestimo = usuario.EditarAmigo();
+                                verificaEmprestimo = usuario.CadastrarDevolucao();
                                 if (verificaEmprestimo == true)
                                 {
                                     salvarUsuario(usuario);
                                 }
                                 break;
                             case 3:
-                                verificaEmprestimo = usuario.ExcluirAmigo();
-                                if (verificaEmprestimo == true)
-                                {
-                                    salvarUsuario(usuario);
-                                }
+                                usuario.MostrarEmprestimosCadastrados();
                                 break;
                             case 4:
                                 Console.WriteLine("Voltando...");

@@ -1,13 +1,13 @@
 class Emprestimo
 {
-    
+
     private string amigo;
     private string revista;
     private string status;
     private DateTime dataEmprestimo;
     private DateTime dataDevolucao;
     private DateTime dataDevolvido;
-    
+
     #region COnstrutores
 
     public Emprestimo(string Amigo, string Revista, int DiasEmprestimo)
@@ -22,7 +22,7 @@ class Emprestimo
 
     public Emprestimo()
     {
-        
+
     }
 
     #endregion
@@ -107,6 +107,15 @@ class Emprestimo
     public DateTime CalcularDataDevolucao(int DiasEmprestimo)
     {
         return this.dataEmprestimo.AddDays(DiasEmprestimo);
+    }
+
+    public string DiasEmAtraso()
+    {
+        TimeSpan diferenca = DateTime.Now - this.dataDevolucao;
+
+        int dias = diferenca.Days > 0 ? diferenca.Days : 0;
+
+        return dias.ToString();
     }
 
     #endregion
