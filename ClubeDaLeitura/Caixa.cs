@@ -120,7 +120,6 @@ class Caixa
 
         return true;
     }
-
     public int verificaRevista(string nome)
     {
         foreach (var revista in revistas)
@@ -133,7 +132,6 @@ class Caixa
         }
         return 0;
     }
-
     public void DevolverRevista(string nome)
     {
         foreach (var revista in revistas)
@@ -363,7 +361,6 @@ class Caixa
 
         return $"{codigo}{this.Etiqueta}\u001b[0m";
     }
-
 
     #endregion
 

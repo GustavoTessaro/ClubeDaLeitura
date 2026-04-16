@@ -125,6 +125,13 @@ class Program
     {
         Usuario usuario = lerUsuario();
 
+        bool verificaEmprestimos = usuario.VerificarEmprestimos();
+
+        if (verificaEmprestimos == true)
+        {
+            salvarUsuario(usuario);
+        }
+
         string nome = "";
         string senha = "";
 

@@ -544,7 +544,6 @@ class Usuario
             return verifica;
         }
     }
-
     public string MostrarTodasAsRevistasCadastradas(string amigo)
     {
         bool verificaLista = verificarCaixasCadastradas();
@@ -561,6 +560,28 @@ class Usuario
 
         Console.Write($"Digite o nome da revista que o amigo {amigo} fará o Empréstimo: ");
         string Revista = Console.ReadLine() ?? "";
+
+        foreach (var emprestimo in emprestimos)
+        {
+            if (emprestimo.getAmigo().ToLower() == amigo.ToLower() && (emprestimo.getStatus() == "Aberto" || emprestimo.getStatus() == "Atrasado"))
+            {
+                Console.WriteLine($"Amigo {amigo} já tem um emprestimo cadastrado não devolvido");
+
+                if (emprestimo.getStatus() == "Aberto")
+                {
+                    Console.WriteLine($"Amigo: {emprestimo.getAmigo}, Revista: {emprestimo.getRevista}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data a ser Devolvida: {emprestimo.getDataDevolucao().ToString("dd/MM/yyyy")}, Status: {emprestimo.getStatus()}");
+                }
+                else
+                {
+                    if (emprestimo.getStatus() == "Atrasado")
+                    {
+                        Console.WriteLine($"Amigo: {emprestimo.getAmigo}, Revista: {emprestimo.getRevista}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data que deveria ser Devolvida: {emprestimo.getDataDevolucao().ToString("dd/MM/yyyy")}, Dias em Atraso: {emprestimo.DiasEmAtraso()}, Status: {emprestimo.getStatus()}");
+                    }
+                }
+
+                return "";
+            }
+        }
 
         return Revista;
 
@@ -888,6 +909,41 @@ class Usuario
 
     #region Métodos Emprestimo
 
+    public bool VerificarEmprestimos()
+    {
+        if (emprestimos.Count == 0)
+        {
+            return false;
+        }
+        else
+        {
+            bool verificaAtraso = false;
+
+            foreach (var emprestimo in emprestimos)
+            {
+                // Se o status não for "Concluído" e a data de hoje for maior que a data de devolução
+                if (emprestimo.getStatus() != "Concluído" && emprestimo.getStatus() != "Atrasado" && DateTime.Now > emprestimo.getDataDevolucao())
+                {
+                    emprestimo.setStatus("Atrasado");
+
+                    if (verificaAtraso == false)
+                    {
+                        Console.WriteLine("Atenção: Existem NOVOS empréstimos atrasados!");
+                    }
+
+                    Console.WriteLine($"Amigo: {emprestimo.getAmigo}, Revista: {emprestimo.getRevista}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data que deveria ser Devolvida: {emprestimo.getDataDevolucao().ToString("dd/MM/yyyy")}, Dias em Atraso: {emprestimo.DiasEmAtraso()}, Status: {emprestimo.getStatus()}");
+
+                    verificaAtraso = true;
+                }
+            }
+
+            if (verificaAtraso == true)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
     public bool CadastrarEmprestimo()
     {
         string Amigo = "";
@@ -966,7 +1022,6 @@ class Usuario
             return false;
         }
     }
-
     public bool CadastrarDevolucao()
     {
         string amigo = "";

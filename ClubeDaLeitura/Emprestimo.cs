@@ -108,7 +108,6 @@ class Emprestimo
     {
         return this.dataEmprestimo.AddDays(DiasEmprestimo);
     }
-
     public string DiasEmAtraso()
     {
         TimeSpan diferenca = DateTime.Now - this.dataDevolucao;
