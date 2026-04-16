@@ -969,7 +969,39 @@ class Usuario
 
     public bool CadastrarDevolucao()
     {
-        
+        string amigo = "";
+
+        Console.Write("Digite o nome do amigo que devolveu a revista: ");
+        amigo = Console.ReadLine() ?? "";
+
+        if (amigo != "")
+        {
+            foreach (var emprestimo in emprestimos)
+            {
+                if (emprestimo.getAmigo().ToLower() == amigo.ToLower())
+                {
+                    emprestimo.setStatus("Concluído");
+                    emprestimo.setDataDevolucao(DateTime.MinValue);
+                    emprestimo.setDataDevolvido(DateTime.Now);
+
+                    foreach (var caixa in caixas)
+                    {
+                        caixa.DevolverRevista(emprestimo.getRevista());
+                    }
+
+                    return true;
+                }
+            }
+
+            Console.WriteLine("Amigo não encontrado, por favor tente novamente!");
+            return false;
+        }
+        else
+        {
+            Console.WriteLine("Nome do Amigo Vazia, tente Novamente!");
+            return false;
+        }
+
     }
     public bool MostrarEmprestimosCadastrados()
     {

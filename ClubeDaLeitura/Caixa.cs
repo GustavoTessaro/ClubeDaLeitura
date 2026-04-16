@@ -123,15 +123,26 @@ class Caixa
 
     public int verificaRevista(string nome)
     {
-        foreach(var revista in revistas)
+        foreach (var revista in revistas)
         {
-            if(revista.getTitulo().ToLower() == nome.ToLower() && revista.getStatus().ToLower() == "Disponível")
+            if (revista.getTitulo().ToLower() == nome.ToLower() && revista.getStatus().ToLower() == "Disponível")
             {
                 revista.setStatus("Indisponível");
                 return this.DiasEmprestimo;
             }
         }
         return 0;
+    }
+
+    public void DevolverRevista(string nome)
+    {
+        foreach (var revista in revistas)
+        {
+            if (revista.getTitulo().ToLower() == nome.ToLower() && revista.getStatus().ToLower() == "Indisponível")
+            {
+                revista.setStatus("Disponível");
+            }
+        }
     }
     public void MostrarRevistasCadastradasSemMensagem()
     {
