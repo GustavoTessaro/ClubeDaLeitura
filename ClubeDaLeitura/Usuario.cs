@@ -535,4 +535,75 @@ class Usuario
 
     #endregion
 
+    #region Métodos Amigo
+
+    public bool MostrarAmigosCadastrados()
+    {
+        if (amigos.Count == 0)
+        {
+            Console.WriteLine("Nenhum amigo cadastrado.");
+            return false;
+        }
+        else
+        {
+            Console.WriteLine("Amigos cadastrados:");
+            foreach (var amigo in amigos)
+            {
+                Console.WriteLine($"Nome: {amigo.getNome()}, Nome do Responsável: {amigo.getNomeResponsavel()}, Telefone: {amigo.getTelefone()}");
+            }
+            return true;
+        }
+    }
+
+    public bool CadastrarAmigo()
+    {
+        string Nome = "";
+        string NomeResponsavel = "";
+        string Telefone = "";
+
+        try
+        {
+            Console.Write("Digite o nome do Amigo: ");
+            Nome = Console.ReadLine() ?? "";
+            Console.Write("Digite o nome do Responsavel do Amigo: ");
+            NomeResponsavel = Console.ReadLine() ?? "";
+            Console.Write("Digite o número de telefone do Amigo: ");
+            Telefone = Console.ReadLine() ?? "";
+        }
+        catch (System.Exception)
+        {
+            Console.WriteLine("Erro, verifique se os parêmetros foram passados corretamente!");
+            return false;
+        }
+
+        if (amigos.Count != 0)
+        {
+            foreach (var amigoV in amigos)
+            {
+                if (amigoV.getNome().ToLower() == Nome.ToLower())
+                {
+                    Console.WriteLine("Amigo já cadastrado com o nome " + Nome + " Por favor, tente novamente!");
+                    return false;
+                }
+            }
+        }
+
+        if (Nome != "" && NomeResponsavel != "" && Telefone != "")
+        {
+            Amigo amigo = new Amigo(Nome, NomeResponsavel, Telefone);
+
+            amigos.Add(amigo);
+            Console.WriteLine("Amigo cadastrado com sucesso!");
+
+            return true;
+        }
+        else
+        {
+            Console.WriteLine("Nome dos campos Vazia, por favor tente novamente!");
+            return false;
+        }
+    }
+
+    #endregion
+
 }

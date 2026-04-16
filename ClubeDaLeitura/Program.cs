@@ -71,7 +71,28 @@ class Program
             Console.WriteLine("1 - Cadastrar Revista");
             Console.WriteLine("2 - Editar Revista");
             Console.WriteLine("3 - Excluir Revista");
-            Console.WriteLine("4 - Visualizar Revista");
+            Console.WriteLine("4 - Visualizar Revistas");
+            Console.WriteLine("5 - Voltar para o início");
+            Console.WriteLine("---------------------------------");
+            Console.Write("> ");
+            opcao = (int)char.GetNumericValue(Console.ReadKey(true).KeyChar);
+        } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5);
+
+        return opcao;
+    }
+    static int ObterEscolhaMenuAmigos()
+    {
+        int opcao = 0;
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Gestão de Amigos");
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("1 - Cadastrar Amigo");
+            Console.WriteLine("2 - Editar Amigo");
+            Console.WriteLine("3 - Excluir Amigo");
+            Console.WriteLine("4 - Visualizar Amigos");
             Console.WriteLine("5 - Voltar para o início");
             Console.WriteLine("---------------------------------");
             Console.Write("> ");
@@ -200,10 +221,55 @@ class Program
                     #endregion
                     break;
                 case 3:
+                    #region Gestão de Amigos
 
+                    int opcaoAmigos = 0;
+                    bool verificaAmigos = false;
+
+                    do
+                    {
+                        opcaoAmigos = ObterEscolhaMenuAmigos();
+
+                        switch (opcaoAmigos)
+                        {
+                            case 1:
+                                verificaCaixas = usuario.CadastrarAmigo();
+                                if (verificaAmigos == true)
+                                {
+                                    salvarUsuario(usuario);
+                                }
+                                break;
+                            case 2:
+                                verificaCaixas = usuario.EditarCaixa();
+                                if (verificaAmigos == true)
+                                {
+                                    salvarUsuario(usuario);
+                                }
+                                break;
+                            case 3:
+                                verificaCaixas = usuario.ExcluirCaixa();
+                                if (verificaAmigos == true)
+                                {
+                                    salvarUsuario(usuario);
+                                }
+                                break;
+                            case 4:
+                                usuario.MostrarCaixasCadastradas();
+                                break;
+                            case 5:
+                                Console.WriteLine("Voltando...");
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
+                                break;
+                        }
+
+                    } while (opcaoAmigos != 5);
+
+                    #endregion
                     break;
                 case 4:
-            
+
                     break;
                 case 5:
                     Console.WriteLine("Fechando o Programa...");
