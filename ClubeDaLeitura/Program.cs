@@ -101,6 +101,26 @@ class Program
 
         return opcao;
     }
+    static int ObterEscolhaMenuEmprestimos()
+    {
+        int opcao = 0;
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Gestão de Empréstimos");
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("1 - Cadastrar Empréstimo");
+            Console.WriteLine("2 - Cadastrar Devolução");
+            Console.WriteLine("3 - Visualizar Empréstimos");
+            Console.WriteLine("4 - Voltar para o início");
+            Console.WriteLine("---------------------------------");
+            Console.Write("> ");
+            opcao = (int)char.GetNumericValue(Console.ReadKey(true).KeyChar);
+        } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5);
+
+        return opcao;
+    }
     static void Main(string[] args)
     {
         Usuario usuario = lerUsuario();
@@ -233,21 +253,21 @@ class Program
                         switch (opcaoAmigos)
                         {
                             case 1:
-                                verificaCaixas = usuario.CadastrarAmigo();
+                                verificaAmigos = usuario.CadastrarAmigo();
                                 if (verificaAmigos == true)
                                 {
                                     salvarUsuario(usuario);
                                 }
                                 break;
                             case 2:
-                                verificaCaixas = usuario.EditarAmigo();
+                                verificaAmigos = usuario.EditarAmigo();
                                 if (verificaAmigos == true)
                                 {
                                     salvarUsuario(usuario);
                                 }
                                 break;
                             case 3:
-                                verificaCaixas = usuario.ExcluirAmigo();
+                                verificaAmigos = usuario.ExcluirAmigo();
                                 if (verificaAmigos == true)
                                 {
                                     salvarUsuario(usuario);
@@ -269,7 +289,49 @@ class Program
                     #endregion
                     break;
                 case 4:
+                    #region Gestão de Emprestimos
 
+                    int opcaoEmprestimo = 0;
+                    bool verificaEmprestimo = false;
+
+                    do
+                    {
+                        opcaoEmprestimo = ObterEscolhaMenuEmprestimos();
+
+                        switch (opcaoEmprestimo)
+                        {
+                            case 1:
+                                verificaEmprestimo = usuario.CadastrarAmigo();
+                                if (verificaEmprestimo == true)
+                                {
+                                    salvarUsuario(usuario);
+                                }
+                                break;
+                            case 2:
+                                verificaEmprestimo = usuario.EditarAmigo();
+                                if (verificaEmprestimo == true)
+                                {
+                                    salvarUsuario(usuario);
+                                }
+                                break;
+                            case 3:
+                                verificaEmprestimo = usuario.ExcluirAmigo();
+                                if (verificaEmprestimo == true)
+                                {
+                                    salvarUsuario(usuario);
+                                }
+                                break;
+                            case 4:
+                                Console.WriteLine("Voltando...");
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
+                                break;
+                        }
+
+                    } while (opcaoEmprestimo != 4);
+
+                    #endregion
                     break;
                 case 5:
                     Console.WriteLine("Fechando o Programa...");

@@ -680,7 +680,6 @@ class Usuario
             return false;
         }
     }
-
     public int EscolherEditarAmigo()
     {
 
