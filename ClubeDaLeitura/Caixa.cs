@@ -125,9 +125,9 @@ class Caixa
     {
         foreach(var revista in revistas)
         {
-            if(revista.getTitulo().ToLower() == nome.ToLower())
+            if(revista.getTitulo().ToLower() == nome.ToLower() && revista.getStatus().ToLower() == "Disponível")
             {
-                revista.setStatus("Aberto");
+                revista.setStatus("Indisponível");
                 return this.DiasEmprestimo;
             }
         }

@@ -956,13 +956,13 @@ class Usuario
             Emprestimo emprestimo = new Emprestimo(Amigo, Revista, DiasEmprestimo);
 
             emprestimos.Add(emprestimo);
-            Console.WriteLine("Emrpestimo cadastrado com sucesso!");
+            Console.WriteLine("Emprestimo cadastrado com sucesso!");
 
             return true;
         }
         else
         {
-            Console.WriteLine("Nome dos campos Vazia, por favor tente novamente!");
+            Console.WriteLine("Nome dos campos Vazia ou Revista Indisponível, por favor tente novamente!");
             return false;
         }
     }
