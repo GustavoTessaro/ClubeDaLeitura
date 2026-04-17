@@ -455,7 +455,6 @@ class Caixa
     }
     public string GetEtiquetaComCor()
     {
-        // Mapeia a string que você salvou no SetCor para o código ANSI
         string codigo = this.Cor.ToLower() switch
         {
             "white" => "\u001b[37m",
