@@ -576,7 +576,7 @@ class Usuario
                     verifica = caixa.EditarRevista();
                 }
             }
-            if(caixaEncontrada == false)
+            if (caixaEncontrada == false)
             {
                 Console.WriteLine("Etiqueta não encontrada, tente novamente!");
                 verifica = false;
@@ -1239,14 +1239,20 @@ class Usuario
 
                 if (Amigo != "")
                 {
+                    bool amigoAchado = false;
+
                     foreach (var amigo in amigos)
                     {
                         if (amigo.getNome().ToLower() == Amigo.ToLower())
                         {
+                            amigoAchado = true;
+
                             Revista = MostrarTodasAsRevistasCadastradas(amigo.getNome());
 
                             if (Revista != "")
                             {
+                                bool revistaAchada = false;
+
                                 int verificarDiasEmprestimos = 0;
 
                                 foreach (var caixa in caixas)
@@ -1258,6 +1264,13 @@ class Usuario
                                         DiasEmprestimo = verificarDiasEmprestimos;
                                     }
                                 }
+
+                                if (revistaAchada == false)
+                                {
+                                    Console.WriteLine("Revista não Encontrada, tente novamente!");
+                                    return false;
+                                }
+
                             }
                             else
                             {
@@ -1266,6 +1279,12 @@ class Usuario
                             }
 
                         }
+                    }
+
+                    if (amigoAchado == false)
+                    {
+                        Console.WriteLine("Amigo não Encontrado, tente novamente!");
+                        return false;
                     }
                 }
                 else
