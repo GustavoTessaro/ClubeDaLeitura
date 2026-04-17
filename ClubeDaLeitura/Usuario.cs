@@ -1251,8 +1251,6 @@ class Usuario
 
                             if (Revista != "")
                             {
-                                bool revistaAchada = false;
-
                                 int verificarDiasEmprestimos = 0;
 
                                 foreach (var caixa in caixas)
@@ -1263,12 +1261,6 @@ class Usuario
                                     {
                                         DiasEmprestimo = verificarDiasEmprestimos;
                                     }
-                                }
-
-                                if (revistaAchada == false)
-                                {
-                                    Console.WriteLine("Revista não Encontrada, tente novamente!");
-                                    return false;
                                 }
 
                             }
