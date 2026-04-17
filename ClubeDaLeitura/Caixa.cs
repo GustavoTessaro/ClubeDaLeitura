@@ -1,13 +1,12 @@
 using System.Dynamic;
 using System.Xml.Schema;
-
+using System.Text.Json.Serialization;
 class Caixa
 {
 
     private string Etiqueta;
     private string Cor;
     private int DiasEmprestimo;
-
     private List<Revista> revistas;
 
     #region Construtores
@@ -71,9 +70,16 @@ class Caixa
 
     #region Serializable
 
+    [JsonPropertyName("Etiqueta")]
     public string Etiqueta_JSON { get => GetEtiqueta(); set => SetEtiqueta(value); }
+
+    [JsonPropertyName("Cor")]
     public string Cor_JSON { get => GetCor(); set => SetCor(value); }
+
+    [JsonPropertyName("DiasEmprestimo")]
     public int DiasEmprestimo_JSON { get => GetDiasEmprestimo(); set => SetDiasEmprestimo(value); }
+
+    [JsonPropertyName("revistas")]
     public List<Revista> Revistas_JSON { get => GetRevistas(); set => SetRevistas(value); }
 
     #endregion

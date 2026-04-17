@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 class Usuario
 {
 
@@ -76,10 +78,19 @@ class Usuario
 
     #region Serializable
 
+    [JsonPropertyName("nome")]
     public string Nome_JSON { get => GetNome(); set => SetNome(value); }
+
+    [JsonPropertyName("senha")]
     public string Senha_JSON { get => GetSenha(); set => SetSenha(value); }
+
+    [JsonPropertyName("caixas")]
     public List<Caixa> Caixas_JSON { get => GetCaixas(); set => SetCaixas(value); }
+
+    [JsonPropertyName("amigos")]
     public List<Amigo> Amigos_JSON { get => GetAmigos(); set => SetAmigos(value); }
+
+    [JsonPropertyName("emprestimos")]
     public List<Emprestimo> Emprestimos_JSON { get => GetEmprestimos(); set => SetEmprestimos(value); }
 
     #endregion

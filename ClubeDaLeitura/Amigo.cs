@@ -1,6 +1,7 @@
+using System.Text.Json.Serialization;
 class Amigo
 {
-    
+
     private string nome;
     private string nomeResponsavel;
     private string telefone;
@@ -16,11 +17,11 @@ class Amigo
 
     public Amigo()
     {
-        
+
     }
 
     #endregion
-    
+
     #region Getters e Setters
 
     public string getNome()
@@ -47,7 +48,7 @@ class Amigo
     {
         return this.telefone;
     }
-    
+
     public void setTelefone(string Telefone)
     {
         this.telefone = Telefone;
@@ -57,8 +58,13 @@ class Amigo
 
     #region Serializable
 
+    [JsonPropertyName("nome")]
     public string Nome_JSON { get => getNome(); set => setNome(value); }
+
+    [JsonPropertyName("nomeResponsavel")]
     public string NomeResponsavel_JSON { get => getNomeResponsavel(); set => setNomeResponsavel(value); }
+
+    [JsonPropertyName("telefone")]
     public string Telefone_JSON { get => getTelefone(); set => setTelefone(value); }
 
     #endregion

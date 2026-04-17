@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 class Emprestimo
 {
 
@@ -93,11 +94,22 @@ class Emprestimo
 
     #region Serializable
 
+    [JsonPropertyName("amigo")]
     public string Amigo_JSON { get => getAmigo(); set => setAmigo(value); }
+
+    [JsonPropertyName("revista")]
     public string Revista_JSON { get => getRevista(); set => setRevista(value); }
+
+    [JsonPropertyName("status")]
     public string Status_JSON { get => getStatus(); set => setStatus(value); }
+
+    [JsonPropertyName("dataEmprestimo")]
     public DateTime DataEmprestimo_JSON { get => getDataEmprestimo(); set => setDataEmprestimo(value); }
+
+    [JsonPropertyName("dataDevolucao")]
     public DateTime DataDevolucao_JSON { get => getDataDevolucao(); set => setDataDevolucao(value); }
+
+    [JsonPropertyName("dataDevolvido")]
     public DateTime DataDevolvido_JSON { get => getDataDevolvido(); set => setDataDevolvido(value); }
 
     #endregion

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 class Revista
 {
 
@@ -67,9 +68,16 @@ class Revista
 
     #region Serializable
 
+    [JsonPropertyName("Titulo")]
     public string Titulo_JSON { get => getTitulo(); set => setTitulo(value); }
+
+    [JsonPropertyName("Status")]
     public string Status_JSON { get => getStatus(); set => setStatus(value); }
+
+    [JsonPropertyName("NumeroDaEdicao")]
     public int NumeroDaEdicao_JSON { get => getNumeroDaEdicao(); set => setNumeroDaEdicao(value); }
+
+    [JsonPropertyName("AnoPublicacao")]
     public DateTime AnoPublicacao_JSON { get => getAnoPublicacao(); set => setAnoPublicacao(value); }
 
     #endregion
