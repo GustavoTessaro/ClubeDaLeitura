@@ -286,10 +286,15 @@ class Usuario
 
         if (selecionarCaixa != "")
         {
+
+            bool CaixaEncontrada = false;
+
             foreach (var caixa in caixas.ToList())
             {
                 if (selecionarCaixa.ToLower() == caixa.GetEtiqueta().ToLower())
                 {
+                    CaixaEncontrada = true;
+
                     if (caixa.GetRevistas().Count == 0)
                     {
                         Console.Write("Tem certeza que deseja excluir a caixa " + caixa.GetEtiquetaComCor() + " (S/N)?");
@@ -313,12 +318,14 @@ class Usuario
                         verifica = false;
                     }
                 }
-                else
-                {
-                    Console.WriteLine("Etiqueta não encontrada, tente novamente!");
-                    verifica = false;
-                }
             }
+
+            if (CaixaEncontrada == false)
+            {
+                Console.WriteLine("Etiqueta não encontrada, tente novamente!");
+                verifica = false;
+            }
+
             return verifica;
         }
         else
@@ -344,10 +351,13 @@ class Usuario
 
         if (selecionarCaixa != "")
         {
+            bool caixaEncontrada = false;
+
             foreach (var caixa in caixas.ToList())
             {
                 if (selecionarCaixa.ToLower() == caixa.GetEtiqueta().ToLower())
                 {
+                    caixaEncontrada = true;
                     int opcao = EscolherEditarCaixa();
 
                     try
@@ -446,12 +456,13 @@ class Usuario
                         verifica = false;
                     }
                 }
-                else
-                {
-                    Console.WriteLine("Etiqueta não encontrada, tente novamente!");
-                    verifica = false;
-                }
             }
+            if (caixaEncontrada == false)
+            {
+                Console.WriteLine("Etiqueta não encontrada, tente novamente!");
+                verifica = false;
+            }
+
             return verifica;
         }
         else
@@ -555,18 +566,22 @@ class Usuario
 
         if (selecionarCaixa != "")
         {
+            bool caixaEncontrada = false;
+
             foreach (var caixa in caixas.ToList())
             {
                 if (selecionarCaixa.ToLower() == caixa.GetEtiqueta().ToLower())
                 {
+                    caixaEncontrada = true;
                     verifica = caixa.EditarRevista();
                 }
-                else
-                {
-                    Console.WriteLine("Etiqueta não encontrada, tente novamente!");
-                    verifica = false;
-                }
             }
+            if(caixaEncontrada == false)
+            {
+                Console.WriteLine("Etiqueta não encontrada, tente novamente!");
+                verifica = false;
+            }
+
             return verifica;
         }
         else
@@ -592,18 +607,23 @@ class Usuario
 
         if (selecionarCaixa != "")
         {
+            bool caixaEncontrada = false;
+
             foreach (var caixa in caixas.ToList())
             {
                 if (selecionarCaixa.ToLower() == caixa.GetEtiqueta().ToLower())
                 {
                     verifica = caixa.ExcluirRevista();
                 }
-                else
-                {
-                    Console.WriteLine("Etiqueta não encontrada, tente novamente!");
-                    verifica = false;
-                }
+
             }
+
+            if (caixaEncontrada == false)
+            {
+                Console.WriteLine("Etiqueta não encontrada, tente novamente!");
+                verifica = false;
+            }
+
             return verifica;
         }
         else
@@ -758,11 +778,13 @@ class Usuario
 
         if (selecionarAmigo != "")
         {
+            bool amigoEncontrado = false;
+
             foreach (var amigo in amigos.ToList())
             {
                 if (selecionarAmigo.ToLower() == amigo.getNome().ToLower())
                 {
-
+                    amigoEncontrado = true;
                     bool verificaListaEmprestimo = false;
 
                     foreach (var emprestimo in emprestimos)
@@ -796,12 +818,14 @@ class Usuario
                         verifica = false;
                     }
                 }
-                else
-                {
-                    Console.WriteLine("Amigo não encontrado, tente novamente!");
-                    verifica = false;
-                }
             }
+
+            if (amigoEncontrado == false)
+            {
+                Console.WriteLine("Amigo não encontrado, tente novamente!");
+                verifica = false;
+            }
+
             return verifica;
         }
         else
@@ -933,10 +957,13 @@ class Usuario
 
         if (selecionarAmigo != "")
         {
+            bool amigoEncontrado = false;
+
             foreach (var amigo in amigos.ToList())
             {
                 if (selecionarAmigo.ToLower() == amigo.getNome().ToLower())
                 {
+                    amigoEncontrado = true;
                     int opcao = EscolherEditarAmigo();
 
                     try
@@ -1137,12 +1164,14 @@ class Usuario
                         verifica = false;
                     }
                 }
-                else
-                {
-                    Console.WriteLine("Amigo não encontrado, tente novamente!");
-                    verifica = false;
-                }
             }
+
+            if (amigoEncontrado == false)
+            {
+                Console.WriteLine("Amigo não encontrado, tente novamente!");
+                verifica = false;
+            }
+
             return verifica;
         }
         else

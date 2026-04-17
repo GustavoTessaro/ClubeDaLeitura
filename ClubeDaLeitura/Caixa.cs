@@ -233,10 +233,14 @@ class Caixa
 
         if (selecionarRevista != "")
         {
+            bool revistaEncontrada = false;
+
             foreach (var revista in revistas.ToList())
             {
                 if (selecionarRevista.ToLower() == revista.getTitulo().ToLower())
                 {
+                    revistaEncontrada = true;
+
                     Console.Write("Tem certeza que deseja excluir a revista " + revista.getTitulo() + " (S/N)?");
                     char resposta = char.ToUpper(Console.ReadKey(true).KeyChar);
 
@@ -258,12 +262,13 @@ class Caixa
                         verifica = false;
                     }
                 }
-                else
-                {
-                    Console.WriteLine("Revista não encontrada, tente novamente!");
-                    verifica = false;
-                }
             }
+            if (revistaEncontrada == false)
+            {
+                Console.WriteLine("Revista não encontrada, tente novamente!");
+                verifica = false;
+            }
+
             return verifica;
         }
         else
@@ -306,10 +311,14 @@ class Caixa
 
         if (selecionarRevista != "")
         {
+            bool revistaEncontrada = false;
+
             foreach (var revista in revistas.ToList())
             {
                 if (selecionarRevista.ToLower() == revista.getTitulo().ToLower())
                 {
+                    revistaEncontrada = true;
+
                     int opcao = EscolherEditarRevista();
 
                     try
@@ -439,12 +448,13 @@ class Caixa
                         verifica = false;
                     }
                 }
-                else
-                {
-                    Console.WriteLine("Revista não encontrada, tente novamente!");
-                    verifica = false;
-                }
             }
+            if(revistaEncontrada == false)
+            {
+                Console.WriteLine("Revista não encontrada, tente novamente!");
+                verifica = false;
+            }
+
             return verifica;
         }
         else
