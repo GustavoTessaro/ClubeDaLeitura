@@ -1271,19 +1271,19 @@ class Usuario
             {
                 if (emprestimo.getStatus() == "Concluído")
                 {
-                    Console.WriteLine($"Amigo: {emprestimo.getAmigo}, Revista: {emprestimo.getRevista}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data Devolvida: {emprestimo.getDataDevolvido().ToString("dd/MM/yyyy")}, Status: {emprestimo.getStatus()}");
+                    Console.WriteLine($"Amigo: {emprestimo.getAmigo()}, Revista: {emprestimo.getRevista()}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data Devolvida: {emprestimo.getDataDevolvido().ToString("dd/MM/yyyy")}, Status: {emprestimo.getStatus()}");
                 }
                 else
                 {
                     if (emprestimo.getStatus() == "Aberto")
                     {
-                        Console.WriteLine($"Amigo: {emprestimo.getAmigo}, Revista: {emprestimo.getRevista}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data a ser Devolvida: {emprestimo.getDataDevolucao().ToString("dd/MM/yyyy")}, Status: {emprestimo.getStatus()}");
+                        Console.WriteLine($"Amigo: {emprestimo.getAmigo()}, Revista: {emprestimo.getRevista()}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data a ser Devolvida: {emprestimo.getDataDevolucao().ToString("dd/MM/yyyy")}, Status: {emprestimo.getStatus()}");
                     }
                     else
                     {
                         if (emprestimo.getStatus() == "Atrasado")
                         {
-                            Console.WriteLine($"Amigo: {emprestimo.getAmigo}, Revista: {emprestimo.getRevista}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data que deveria ser Devolvida: {emprestimo.getDataDevolucao().ToString("dd/MM/yyyy")}, Dias em Atraso: {emprestimo.DiasEmAtraso()}, Status: {emprestimo.getStatus()}");
+                            Console.WriteLine($"Amigo: {emprestimo.getAmigo()}, Revista: {emprestimo.getRevista()}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data que deveria ser Devolvida: {emprestimo.getDataDevolucao().ToString("dd/MM/yyyy")}, Dias em Atraso: {emprestimo.DiasEmAtraso()}, Status: {emprestimo.getStatus()}");
                         }
                     }
                 }
