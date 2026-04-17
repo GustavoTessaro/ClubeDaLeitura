@@ -659,6 +659,19 @@ class Usuario
 
     #region Métodos Amigo
 
+    public bool VerificarAmigos(string nome)
+    {
+        bool verifica = false;
+
+        foreach (var amigo in amigos)
+        {
+            if (amigo.getNome().ToLower() == nome.ToLower())
+            {
+                verifica = true;
+            }
+        }
+        return verifica;
+    }
     public string VerificarTelefone(string telefone)
     {
         string apenasNumeros = System.Text.RegularExpressions.Regex.Replace(telefone ?? "", @"[^\d]", "");
@@ -803,6 +816,14 @@ class Usuario
                 return false;
             }
 
+            verificaNome = VerificarAmigos(Nome);
+
+            if (verificaNome == true)
+            {
+                Console.WriteLine("Amigo com o mesmo nome já Cadastrado! Tente Novamente.");
+                return false;
+            }
+
             Console.Write("Digite o nome do Responsavel do Amigo: ");
             NomeResponsavel = Console.ReadLine() ?? "";
 
@@ -912,6 +933,14 @@ class Usuario
                                     return false;
                                 }
 
+                                verificaNome = VerificarAmigos(nome);
+
+                                if (verificaNome == true)
+                                {
+                                    Console.WriteLine("Amigo com o mesmo nome já Cadastrado! Tente Novamente.");
+                                    return false;
+                                }
+
                                 if (nome != "")
                                 {
                                     amigo.setNome(nome);
@@ -993,6 +1022,14 @@ class Usuario
                                 if (validacaoNome == false)
                                 {
                                     Console.WriteLine("Tamanho do Nome do Amigo deve conter entre 3 à 100 caracteres! Tente Novamente.");
+                                    return false;
+                                }
+
+                                validacaoNome = VerificarAmigos(nomeNovo);
+
+                                if (validacaoNome == true)
+                                {
+                                    Console.WriteLine("Amigo com o mesmo nome já Cadastrado! Tente Novamente.");
                                     return false;
                                 }
 

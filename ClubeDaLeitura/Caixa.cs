@@ -195,7 +195,7 @@ class Caixa
         {
             foreach (var revista in revistas)
             {
-                Console.WriteLine($"Título: {revista.getTitulo}, Número da Edição: {revista.getNumeroDaEdicao}, Data da Publicação: {revista.getAnoPublicacao().ToString("dd/MM/yyyy")}, Status: {revista.getStatus()}");
+                Console.WriteLine($"Título: {revista.getTitulo()}, Número da Edição: {revista.getNumeroDaEdicao()}, Data da Publicação: {revista.getAnoPublicacao().ToString("dd/MM/yyyy")}, Status: {revista.getStatus()}");
             }
         }
     }
@@ -211,7 +211,7 @@ class Caixa
             Console.WriteLine("Caixas cadastradas:");
             foreach (var revista in revistas)
             {
-                Console.WriteLine($"Título: {revista.getTitulo}, Número da Edição: {revista.getNumeroDaEdicao}, Data da Publicação: {revista.getAnoPublicacao().ToString("dd/MM/yyyy")}, Status: {revista.getStatus()}");
+                Console.WriteLine($"Título: {revista.getTitulo()}, Número da Edição: {revista.getNumeroDaEdicao()}, Data da Publicação: {revista.getAnoPublicacao().ToString("dd/MM/yyyy")}, Status: {revista.getStatus()}");
             }
             return true;
         }
