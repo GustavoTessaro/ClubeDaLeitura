@@ -672,6 +672,20 @@ class Usuario
         }
         return verifica;
     }
+
+    public bool VerificarTelefoneExistente(string telefone)
+    {
+        bool verifica = false;
+
+        foreach (var amigo in amigos)
+        {
+            if (amigo.getTelefone() == telefone)
+            {
+                verifica = true;
+            }
+        }
+        return verifica;
+    }
     public string VerificarTelefone(string telefone)
     {
         string apenasNumeros = System.Text.RegularExpressions.Regex.Replace(telefone ?? "", @"[^\d]", "");
@@ -839,6 +853,17 @@ class Usuario
             Telefone = Console.ReadLine() ?? "";
 
             Telefone = VerificarTelefone(Telefone);
+
+            bool verificaTelefoneExistente = false;
+
+            verificaTelefoneExistente = VerificarTelefoneExistente(Telefone);
+
+            if (verificaTelefoneExistente == true)
+            {
+                Console.WriteLine("Número de Telefone já cadastrado em outro Amigo, tente novamente!");
+                return false;
+            }
+
         }
         catch (System.Exception)
         {
@@ -999,6 +1024,17 @@ class Usuario
 
                                 if (Telefone != "")
                                 {
+
+                                    bool verificaTelefoneExistente = false;
+
+                                    verificaTelefoneExistente = VerificarTelefoneExistente(Telefone);
+
+                                    if (verificaTelefoneExistente == true)
+                                    {
+                                        Console.WriteLine("Número de Telefone já cadastrado em outro Amigo, tente novamente!");
+                                        return false;
+                                    }
+
                                     amigo.setTelefone(Telefone);
 
                                     verifica = false;
@@ -1052,6 +1088,17 @@ class Usuario
 
                                 if (nomeNovo != "" && NomeResponsavelNovo != "" && TelefoneNovo != "")
                                 {
+
+                                    bool verificaTelefoneExistenteNovo = false;
+
+                                    verificaTelefoneExistenteNovo = VerificarTelefoneExistente(TelefoneNovo);
+
+                                    if (verificaTelefoneExistenteNovo == true)
+                                    {
+                                        Console.WriteLine("Número de Telefone já cadastrado em outro Amigo, tente novamente!");
+                                        return false;
+                                    }
+
                                     amigo.setNome(nomeNovo);
                                     amigo.setNomeResponsavel(NomeResponsavelNovo);
                                     amigo.setTelefone(TelefoneNovo);
