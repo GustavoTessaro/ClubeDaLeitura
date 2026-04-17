@@ -169,6 +169,9 @@ class Program
                                 {
                                     salvarUsuario(usuario);
                                 }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
                                 break;
                             case 2:
                                 verificaCaixas = usuario.EditarCaixa();
@@ -176,6 +179,9 @@ class Program
                                 {
                                     salvarUsuario(usuario);
                                 }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
                                 break;
                             case 3:
                                 verificaCaixas = usuario.ExcluirCaixa();
@@ -183,6 +189,9 @@ class Program
                                 {
                                     salvarUsuario(usuario);
                                 }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
                                 break;
                             case 4:
                                 usuario.MostrarCaixasCadastradas();
@@ -217,6 +226,9 @@ class Program
                                 {
                                     salvarUsuario(usuario);
                                 }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
                                 break;
                             case 2:
                                 verificaRevistas = usuario.EditarRevista();
@@ -224,6 +236,9 @@ class Program
                                 {
                                     salvarUsuario(usuario);
                                 }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
                                 break;
                             case 3:
                                 verificaRevistas = usuario.ExcluirRevista();
@@ -231,9 +246,14 @@ class Program
                                 {
                                     salvarUsuario(usuario);
                                 }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
                                 break;
                             case 4:
                                 usuario.MostrarRevistasCadastradas();
+                                Console.WriteLine("\nPrecione ENTER para continuar");
+                                Console.ReadLine();
                                 break;
                             case 5:
                                 Console.WriteLine("Voltando...");
@@ -265,6 +285,9 @@ class Program
                                 {
                                     salvarUsuario(usuario);
                                 }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
                                 break;
                             case 2:
                                 verificaAmigos = usuario.EditarAmigo();
@@ -272,6 +295,9 @@ class Program
                                 {
                                     salvarUsuario(usuario);
                                 }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
                                 break;
                             case 3:
                                 verificaAmigos = usuario.ExcluirAmigo();
@@ -279,9 +305,14 @@ class Program
                                 {
                                     salvarUsuario(usuario);
                                 }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
                                 break;
                             case 4:
                                 usuario.MostrarAmigosCadastrados();
+                                Console.WriteLine("\nPrecione ENTER para continuar");
+                                Console.ReadLine();
                                 break;
                             case 5:
                                 Console.WriteLine("Voltando...");
@@ -313,6 +344,9 @@ class Program
                                 {
                                     salvarUsuario(usuario);
                                 }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
                                 break;
                             case 2:
                                 verificaEmprestimo = usuario.CadastrarDevolucao();
@@ -320,9 +354,14 @@ class Program
                                 {
                                     salvarUsuario(usuario);
                                 }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
                                 break;
                             case 3:
                                 usuario.MostrarEmprestimosCadastrados();
+                                Console.WriteLine("\nPrecione ENTER para continuar");
+                                Console.ReadLine();
                                 break;
                             case 4:
                                 Console.WriteLine("Voltando...");

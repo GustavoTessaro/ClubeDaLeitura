@@ -80,18 +80,53 @@ class Caixa
 
     #region Métodos
 
+    public bool ValidarTamanhoTitulo(string texto)
+    {
+        if (string.IsNullOrEmpty(texto))
+        {
+            return false;
+        }
+
+        int tamanho = texto.Length;
+
+        if (tamanho >= 2 && tamanho <= 100)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     public bool CadastrarRevista()
     {
         string Titulo = "";
         int NumeroDaEdicao = 0;
         DateTime AnoPublicacao;
+        bool verificaString = false;
 
         try
         {
             Console.Write("Digite o Título da Revista: ");
             Titulo = Console.ReadLine();
+
+            verificaString = ValidarTamanhoTitulo(Titulo);
+
+            if (verificaString == false)
+            {
+                Console.WriteLine("Tamanho do Título deve conter entre 2 à 100 caracteres! Tente Novamente.");
+                return false;
+            }
+
             Console.Write($"\nDigite o número da Edição da revista {Titulo}: ");
             NumeroDaEdicao = int.Parse(Console.ReadLine());
+
+            if (NumeroDaEdicao < 0)
+            {
+                Console.WriteLine("Número da Edição deve ser um número POSITIVO! Tente novamente.");
+                return false;
+            }
+
             Console.Write($"\nDigite a data de publicação da revista {Titulo} (dd/MM/yyyy): ");
             AnoPublicacao = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
         }
@@ -271,8 +306,19 @@ class Caixa
                         {
                             case 1:
                                 string Titulo = "";
+                                bool verificaString = false;
+
                                 Console.WriteLine("Digite um novo título para a Revista: ");
                                 Titulo = Console.ReadLine() ?? "";
+
+                                verificaString = ValidarTamanhoTitulo(Titulo);
+
+                                if (verificaString == false)
+                                {
+                                    Console.WriteLine("Tamanho do Título deve conter entre 2 à 100 caracteres! Tente Novamente.");
+                                    return false;
+                                }
+
                                 if (Titulo != "")
                                 {
                                     revista.setTitulo(Titulo);
@@ -283,6 +329,13 @@ class Caixa
                                 int NumeroDaEdicao = 0;
                                 Console.WriteLine("Digite um novo número da Edição para a Revista: ");
                                 NumeroDaEdicao = int.Parse(Console.ReadLine());
+
+                                if (NumeroDaEdicao < 0)
+                                {
+                                    Console.WriteLine("Número da Edição deve ser um número POSITIVO! Tente novamente.");
+                                    return false;
+                                }
+
                                 revista.setNumeroDaEdicao(NumeroDaEdicao);
                                 verifica = true;
                                 break;
@@ -296,12 +349,27 @@ class Caixa
                                 string TituloNovo = "";
                                 int NumeroDaEdicaoNovo = 0;
                                 DateTime AnoPublicacaoNovo;
+                                bool verificaStringNovo = false;
 
                                 Console.WriteLine("Digite um novo título para a Revista: ");
                                 TituloNovo = Console.ReadLine() ?? "";
 
+                                verificaStringNovo = ValidarTamanhoTitulo(TituloNovo);
+
+                                if (verificaStringNovo == false)
+                                {
+                                    Console.WriteLine("Tamanho do Título deve conter entre 2 à 100 caracteres! Tente Novamente.");
+                                    return false;
+                                }
+
                                 Console.WriteLine("Digite um novo número da Edição para a Revista: ");
                                 NumeroDaEdicaoNovo = int.Parse(Console.ReadLine());
+
+                                if (NumeroDaEdicaoNovo < 0)
+                                {
+                                    Console.WriteLine("Número da Edição deve ser um número POSITIVO! Tente novamente.");
+                                    return false;
+                                }
 
                                 Console.Write("Digite a nova data de publicação da revista (dd/MM/yyyy): ");
                                 AnoPublicacaoNovo = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);

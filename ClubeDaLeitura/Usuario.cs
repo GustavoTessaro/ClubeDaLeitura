@@ -169,17 +169,41 @@ class Usuario
 
         return opcao;
     }
+    public bool ValidarTamanhoEtiqueta(string texto)
+    {
+        if (string.IsNullOrEmpty(texto))
+        {
+            return true;
+        }
+
+        if (texto.Length > 50)
+        {
+            return false;
+        }
+
+        return true;
+    }
     public bool CadastrarCaixa()
     {
 
         string Etiqueta = "";
         string Cor = "";
         int DiasDeEmprestimo = 0;
+        bool verificaString = false;
 
         try
         {
             Console.Write("Digite a Etiqueta da Caixa: ");
             Etiqueta = Console.ReadLine();
+
+            verificaString = ValidarTamanhoEtiqueta(Etiqueta);
+
+            if (verificaString == false)
+            {
+                Console.WriteLine("Tamanho da Etiqueta ultrapassou valor máximo de caracteres (50)! Tente Novamente.");
+                return false;
+            }
+
             Cor = EscolherCor(Etiqueta);
             Console.Clear();
             Console.Write("Digite o número de dias de emprestimo: ");
@@ -324,8 +348,19 @@ class Usuario
                         {
                             case 1:
                                 string etiqueta = "";
+                                bool verificaString = false;
+
                                 Console.WriteLine("Digite um novo nome para a Etiqueta: ");
                                 etiqueta = Console.ReadLine() ?? "";
+
+                                verificaString = ValidarTamanhoEtiqueta(etiqueta);
+
+                                if (verificaString == false)
+                                {
+                                    Console.WriteLine("Tamanho da Etiqueta ultrapassou valor máximo de caracteres (50)! Tente Novamente.");
+                                    return false;
+                                }
+
                                 if (etiqueta != "")
                                 {
                                     caixa.SetEtiqueta(etiqueta);
@@ -348,8 +383,19 @@ class Usuario
                                 break;
                             case 4:
                                 string etiquetaNova = "";
+                                bool verificaStringNova = false;
+
                                 Console.WriteLine("Digite um novo nome para a Etiqueta: ");
                                 etiquetaNova = Console.ReadLine() ?? "";
+
+                                verificaStringNova = ValidarTamanhoEtiqueta(etiquetaNova);
+
+                                if (verificaStringNova == false)
+                                {
+                                    Console.WriteLine("Tamanho da Etiqueta ultrapassou valor máximo de caracteres (50)! Tente Novamente.");
+                                    return false;
+                                }
+
                                 string corNova = EscolherCor(caixa.GetEtiquetaComCor());
                                 Console.Write("Digite o novo número de dias de emprestimo: ");
                                 int diasDeEmprestimoNovo = int.Parse(Console.ReadLine());
@@ -395,7 +441,6 @@ class Usuario
     #endregion
 
     #region Métodos Revista
-
     public bool CadastrarRevista()
     {
         bool verificaLista = MostrarCaixasCadastradas();
@@ -591,6 +636,24 @@ class Usuario
 
     #region Métodos Amigo
 
+    public bool ValidarTamanhoNome(string texto)
+    {
+        if (string.IsNullOrEmpty(texto))
+        {
+            return false;
+        }
+
+        int tamanho = texto.Length;
+
+        if (tamanho >= 3 && tamanho <= 100)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     public bool MostrarAmigosCadastrados()
     {
         if (amigos.Count == 0)
@@ -691,13 +754,32 @@ class Usuario
         string Nome = "";
         string NomeResponsavel = "";
         string Telefone = "";
+        bool verificaNome = false;
 
         try
         {
             Console.Write("Digite o nome do Amigo: ");
             Nome = Console.ReadLine() ?? "";
+
+            verificaNome = ValidarTamanhoNome(Nome);
+
+            if (verificaNome == false)
+            {
+                Console.WriteLine("Tamanho do Nome do Amigo deve conter entre 3 à 100 caracteres! Tente Novamente.");
+                return false;
+            }
+
             Console.Write("Digite o nome do Responsavel do Amigo: ");
             NomeResponsavel = Console.ReadLine() ?? "";
+
+            verificaNome = ValidarTamanhoNome(NomeResponsavel);
+
+            if (verificaNome == false)
+            {
+                Console.WriteLine("Tamanho do Nome do Responsável deve conter entre 3 à 100 caracteres! Tente Novamente.");
+                return false;
+            }
+
             Console.Write("Digite o número de telefone do Amigo: ");
             Telefone = Console.ReadLine() ?? "";
         }
@@ -781,8 +863,19 @@ class Usuario
                         {
                             case 1:
                                 string nome = "";
+                                bool verificaNome = false;
+
                                 Console.WriteLine("Digite um novo nome para o Amigo: ");
                                 nome = Console.ReadLine() ?? "";
+
+                                verificaNome = ValidarTamanhoNome(nome);
+
+                                if (verificaNome == false)
+                                {
+                                    Console.WriteLine("Tamanho do Nome do Amigo deve conter entre 3 à 100 caracteres! Tente Novamente.");
+                                    return false;
+                                }
+
                                 if (nome != "")
                                 {
                                     amigo.setNome(nome);
@@ -808,8 +901,18 @@ class Usuario
                                 break;
                             case 2:
                                 string NomeResponsavel = "";
-                                Console.WriteLine("Digite um novo nome do responsavel para o Amigo: ");
+                                bool verificaNomeNovo = false;
+
+                                Console.WriteLine("Digite um novo nome do responsável para o Amigo: ");
                                 NomeResponsavel = Console.ReadLine() ?? "";
+
+                                verificaNomeNovo = ValidarTamanhoNome(NomeResponsavel);
+
+                                if (verificaNomeNovo == false)
+                                {
+                                    Console.WriteLine("Tamanho do Nome do Responsável deve conter entre 3 à 100 caracteres! Tente Novamente.");
+                                    return false;
+                                }
 
                                 if (NomeResponsavel != "")
                                 {
@@ -842,11 +945,31 @@ class Usuario
                                 break;
                             case 4:
                                 string nomeNovo = "";
+                                bool validacaoNome = false;
+
                                 Console.WriteLine("Digite um novo nome para o Amigo: ");
                                 nomeNovo = Console.ReadLine() ?? "";
+
+                                validacaoNome = ValidarTamanhoNome(nomeNovo);
+
+                                if (validacaoNome == false)
+                                {
+                                    Console.WriteLine("Tamanho do Nome do Amigo deve conter entre 3 à 100 caracteres! Tente Novamente.");
+                                    return false;
+                                }
+
                                 string NomeResponsavelNovo = "";
                                 Console.WriteLine("Digite um novo nome do responsavel para o Amigo: ");
                                 NomeResponsavelNovo = Console.ReadLine() ?? "";
+
+                                validacaoNome = ValidarTamanhoNome(NomeResponsavelNovo);
+
+                                if (validacaoNome == false)
+                                {
+                                    Console.WriteLine("Tamanho do Nome do Responsável deve conter entre 3 à 100 caracteres! Tente Novamente.");
+                                    return false;
+                                }
+
                                 Console.Write("Digite o novo número de telefone do amigo: ");
                                 string TelefoneNovo = Console.ReadLine() ?? "";
 
