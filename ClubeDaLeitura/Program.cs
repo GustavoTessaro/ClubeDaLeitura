@@ -195,6 +195,8 @@ class Program
                                 break;
                             case 4:
                                 usuario.MostrarCaixasCadastradas();
+                                Console.WriteLine("\nPrecione ENTER para continuar");
+                                Console.ReadLine();
                                 break;
                             case 5:
                                 Console.WriteLine("Voltando...");

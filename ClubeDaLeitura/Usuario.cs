@@ -264,7 +264,7 @@ class Usuario
             Console.WriteLine("Caixas cadastradas:");
             foreach (var caixa in caixas)
             {
-                Console.WriteLine($"Caixa: {caixa.GetEtiquetaComCor}, Dias de Emprestimo: {caixa.GetDiasEmprestimo}");
+                Console.WriteLine($"Caixa: {caixa.GetEtiquetaComCor()}, Dias de Emprestimo: {caixa.GetDiasEmprestimo()}");
             }
             return true;
         }
@@ -292,33 +292,24 @@ class Usuario
                 {
                     if (caixa.GetRevistas().Count == 0)
                     {
-                        Console.Write("Tem certeza que deseja excluir a caixa " + caixa.GetEtiquetaComCor + " (S/N)?");
+                        Console.Write("Tem certeza que deseja excluir a caixa " + caixa.GetEtiquetaComCor() + " (S/N)?");
                         char resposta = char.ToUpper(Console.ReadKey(true).KeyChar);
 
                         if (resposta == 'S')
                         {
                             caixas.Remove(caixa);
                             Console.WriteLine("Caixa removido com sucesso!");
-                            Thread.Sleep(3000);
-                            while (Console.KeyAvailable) Console.ReadKey(true);
-                            Console.Clear();
                             verifica = true;
                         }
                         else
                         {
                             Console.WriteLine("Operação Cancelada...");
-                            Thread.Sleep(3000);
-                            while (Console.KeyAvailable) Console.ReadKey(true);
-                            Console.Clear();
                             verifica = false;
                         }
                     }
                     else
                     {
                         Console.WriteLine("Você não pode remover uma caixa sem antes REMOVER as revistas que estão nelas!");
-                        Thread.Sleep(3000);
-                        while (Console.KeyAvailable) Console.ReadKey(true);
-                        Console.Clear();
                         verifica = false;
                     }
                 }
@@ -764,26 +755,17 @@ class Usuario
                         {
                             amigos.Remove(amigo);
                             Console.WriteLine("Amigo removido com sucesso!");
-                            Thread.Sleep(3000);
-                            while (Console.KeyAvailable) Console.ReadKey(true);
-                            Console.Clear();
                             verifica = true;
                         }
                         else
                         {
                             Console.WriteLine("Operação Cancelada...");
-                            Thread.Sleep(3000);
-                            while (Console.KeyAvailable) Console.ReadKey(true);
-                            Console.Clear();
                             verifica = false;
                         }
                     }
                     else
                     {
                         Console.WriteLine("Você não pode remover um Amigo sem antes REMOVER os empréstimos dele!");
-                        Thread.Sleep(3000);
-                        while (Console.KeyAvailable) Console.ReadKey(true);
-                        Console.Clear();
                         verifica = false;
                     }
                 }
