@@ -183,7 +183,7 @@ class Caixa
     {
         foreach (var revista in revistas)
         {
-            if (revista.getTitulo().ToLower() == nome.ToLower() && revista.getStatus().ToLower() == "Indisponível")
+            if (revista.getTitulo().ToLower() == nome.ToLower() && revista.getStatus() == "Indisponível")
             {
                 revista.setStatus("Disponível");
             }
