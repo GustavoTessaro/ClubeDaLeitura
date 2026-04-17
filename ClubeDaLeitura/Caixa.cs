@@ -237,7 +237,7 @@ class Caixa
             {
                 if (selecionarRevista.ToLower() == revista.getTitulo().ToLower())
                 {
-                    Console.Write("Tem certeza que deseja excluir a revista " + revista.getTitulo + " (S/N)?");
+                    Console.Write("Tem certeza que deseja excluir a revista " + revista.getTitulo() + " (S/N)?");
                     char resposta = char.ToUpper(Console.ReadKey(true).KeyChar);
 
                     if (resposta == 'S')
