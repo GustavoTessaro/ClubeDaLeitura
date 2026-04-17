@@ -108,7 +108,13 @@ class Caixa
         try
         {
             Console.Write("Digite o Título da Revista: ");
-            Titulo = Console.ReadLine();
+            Titulo = Console.ReadLine() ?? "";
+
+            if (Titulo == "")
+            {
+                Console.WriteLine("Campo VAZIO, tente novamente!");
+                return false;
+            }
 
             verificaString = ValidarTamanhoTitulo(Titulo);
 
@@ -324,6 +330,11 @@ class Caixa
                                     revista.setTitulo(Titulo);
                                     verifica = true;
                                 }
+                                else
+                                {
+                                    Console.WriteLine("Campo VAZIO, tente novamente!");
+                                    return false;
+                                }
                                 break;
                             case 2:
                                 int NumeroDaEdicao = 0;
@@ -342,8 +353,17 @@ class Caixa
                             case 3:
                                 DateTime AnoPublicacao;
                                 Console.Write("Digite a nova data de publicação da revista (dd/MM/yyyy): ");
-                                AnoPublicacao = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
-                                revista.setAnoPublicacao(AnoPublicacao);
+
+                                if (DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out AnoPublicacao))
+                                {
+                                    revista.setAnoPublicacao(AnoPublicacao);
+                                    verifica = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Por favor, digite uma data válida (dd/MM/yyyy)");
+                                    return false;
+                                }
                                 break;
                             case 4:
                                 string TituloNovo = "";
@@ -353,6 +373,12 @@ class Caixa
 
                                 Console.WriteLine("Digite um novo título para a Revista: ");
                                 TituloNovo = Console.ReadLine() ?? "";
+
+                                if (TituloNovo == "")
+                                {
+                                    Console.WriteLine("Campo Vazio! Tente Novamente.");
+                                    return false;
+                                }
 
                                 verificaStringNovo = ValidarTamanhoTitulo(TituloNovo);
 
@@ -374,13 +400,23 @@ class Caixa
                                 Console.Write("Digite a nova data de publicação da revista (dd/MM/yyyy): ");
                                 AnoPublicacaoNovo = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
 
-                                if (TituloNovo != "")
+                                if (DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out AnoPublicacaoNovo))
                                 {
-                                    revista.setTitulo(TituloNovo);
-                                    revista.setNumeroDaEdicao(NumeroDaEdicaoNovo);
-                                    revista.setAnoPublicacao(AnoPublicacaoNovo);
-                                    verifica = true;
+                                    if (TituloNovo != "")
+                                    {
+                                        revista.setTitulo(TituloNovo);
+                                        revista.setNumeroDaEdicao(NumeroDaEdicaoNovo);
+                                        revista.setAnoPublicacao(AnoPublicacaoNovo);
+                                        verifica = true;
+                                    }
                                 }
+                                else
+                                {
+                                    Console.WriteLine("Por favor, digite uma data válida (dd/MM/yyyy)");
+                                    return false;
+                                }
+
+
                                 break;
                             case 5:
                                 Console.WriteLine("Voltando...");

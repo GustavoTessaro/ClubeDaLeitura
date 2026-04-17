@@ -194,7 +194,13 @@ class Usuario
         try
         {
             Console.Write("Digite a Etiqueta da Caixa: ");
-            Etiqueta = Console.ReadLine();
+            Etiqueta = Console.ReadLine() ?? "";
+
+            if (Etiqueta == "")
+            {
+                Console.WriteLine("Campo VAZIO, tente novamente!");
+                return false;
+            }
 
             verificaString = ValidarTamanhoEtiqueta(Etiqueta);
 
@@ -366,6 +372,11 @@ class Usuario
                                     caixa.SetEtiqueta(etiqueta);
                                     verifica = true;
                                 }
+                                else
+                                {
+                                    Console.WriteLine("Campo VAZIO, tente novamente!");
+                                    return false;
+                                }
                                 break;
                             case 2:
                                 string cor = EscolherCor(caixa.GetEtiquetaComCor());
@@ -379,6 +390,11 @@ class Usuario
                                 {
                                     caixa.SetDiasEmprestimo(diasDeEmprestimo);
                                     verifica = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Dias de emprestimo deve ser maior que 0, tente novamente!");
+                                    return false;
                                 }
                                 break;
                             case 4:
@@ -406,6 +422,11 @@ class Usuario
                                     caixa.SetCor(corNova);
                                     caixa.SetDiasEmprestimo(diasDeEmprestimoNovo);
                                     verifica = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Campo Etiqueta VAZIA ou Dias de emprestimo menor igual a 0, tente novamente!");
+                                    return false;
                                 }
                                 break;
                             case 5:
@@ -636,6 +657,26 @@ class Usuario
 
     #region Métodos Amigo
 
+    public string VerificarTelefone(string telefone)
+    {
+        string apenasNumeros = System.Text.RegularExpressions.Regex.Replace(telefone ?? "", @"[^\d]", "");
+
+        int tamanho = apenasNumeros.Length;
+
+        if (tamanho == 10)
+        {
+            return long.Parse(apenasNumeros).ToString(@"(00) 0000-0000");
+        }
+        else if (tamanho == 11)
+        {
+            return long.Parse(apenasNumeros).ToString(@"(00) 0 0000-0000");
+        }
+        else
+        {
+            Console.WriteLine("Número de Telefone inválido (formato validado: 10-11 dígitos), tente novamente!");
+            return "";
+        }
+    }
     public bool ValidarTamanhoNome(string texto)
     {
         if (string.IsNullOrEmpty(texto))
@@ -782,6 +823,8 @@ class Usuario
 
             Console.Write("Digite o número de telefone do Amigo: ");
             Telefone = Console.ReadLine() ?? "";
+
+            Telefone = VerificarTelefone(Telefone);
         }
         catch (System.Exception)
         {
@@ -930,6 +973,8 @@ class Usuario
                                 Console.Write("Digite o novo número de telefone do amigo: ");
                                 string Telefone = Console.ReadLine();
 
+                                Telefone = VerificarTelefone(Telefone);
+
                                 if (Telefone != "")
                                 {
                                     amigo.setTelefone(Telefone);
@@ -972,6 +1017,8 @@ class Usuario
 
                                 Console.Write("Digite o novo número de telefone do amigo: ");
                                 string TelefoneNovo = Console.ReadLine() ?? "";
+
+                                TelefoneNovo = VerificarTelefone(TelefoneNovo);
 
                                 if (nomeNovo != "" && NomeResponsavelNovo != "" && TelefoneNovo != "")
                                 {
