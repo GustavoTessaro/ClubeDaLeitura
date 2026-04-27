@@ -1407,25 +1407,34 @@ class Usuario
 
         if (amigo != "")
         {
-            foreach (var emprestimo in emprestimos)
+            bool verificarMultas = verificaMulta(amigo);
+
+            if (verificarMultas == true)
             {
-                if (emprestimo.getAmigo().ToLower() == amigo.ToLower())
+                foreach (var emprestimo in emprestimos)
                 {
-                    emprestimo.setStatus("Concluído");
-                    emprestimo.setDataDevolucao(DateTime.MinValue);
-                    emprestimo.setDataDevolvido(DateTime.Now);
-
-                    foreach (var caixa in caixas)
+                    if (emprestimo.getAmigo().ToLower() == amigo.ToLower())
                     {
-                        caixa.DevolverRevista(emprestimo.getRevista());
+                        emprestimo.setStatus("Concluído");
+                        emprestimo.setDataDevolucao(DateTime.MinValue);
+                        emprestimo.setDataDevolvido(DateTime.Now);
+
+                        foreach (var caixa in caixas)
+                        {
+                            caixa.DevolverRevista(emprestimo.getRevista());
+                        }
+
+                        return true;
                     }
-
-                    return true;
                 }
-            }
 
-            Console.WriteLine("Amigo não encontrado, por favor tente novamente!");
-            return false;
+                Console.WriteLine("Amigo não encontrado, por favor tente novamente!");
+                return false;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
@@ -1473,6 +1482,41 @@ class Usuario
 
     #region Métodos Multas
 
+    public bool verificaMulta(string amigo)
+    {
+        if (multas.Count == 0)
+        {
+            return true;
+        }
+        else
+        {
+            foreach (var multa in multas)
+            {
+                if (multa.getstatus() != "Quitada" && multa.getNomeAmigo().ToLower() == amigo.ToLower())
+                {
+                    Console.WriteLine($"ATENÇÃO o amigo {amigo} tem a seguinte multa cadastrada: ");
+
+                    Console.WriteLine($"Amigo: {multa.getNomeAmigo()}, Revista: {multa.getnomeRevista()}, Valor da Multa: R$ {multa.getvalorMulta()}");
+
+                    Console.WriteLine($"O amigo {amigo} já realizou o pagamento da multa no valor de R${multa.getvalorMulta()} ? (S/N)");
+                    char resposta = char.ToUpper(Console.ReadKey(true).KeyChar);
+
+                    if (resposta == 'S')
+                    {
+                        multa.setStatus("Quitada");
+                        return true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Cancelando Pagamento...");
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+    }
     public bool MostrarMultasEmAberto()
     {
         if (multas.Count == 0)
@@ -1539,8 +1583,6 @@ class Usuario
                     verificaMulta = true;
 
                     Console.WriteLine($"Amigo: {multa.getNomeAmigo()}, Revista: {multa.getnomeRevista()}, Valor da Multa: R$ {multa.getvalorMulta()}");
-
-                    bool verificaPagamento = false;
 
                     Console.WriteLine($"O amigo {nomeAmigo} já realizou o pagamento da multa no valor de R${multa.getvalorMulta()} ? (S/N)");
                     char resposta = char.ToUpper(Console.ReadKey(true).KeyChar);
