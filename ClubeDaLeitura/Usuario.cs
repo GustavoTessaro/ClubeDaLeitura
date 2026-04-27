@@ -698,6 +698,48 @@ class Usuario
         return Revista;
 
     }
+    public string MostrarTodasAsRevistasCadastradasReserva(string amigo)
+    {
+        bool verificaLista = verificarCaixasCadastradas();
+
+        if (verificaLista == false)
+        {
+            return "";
+        }
+
+        foreach (var caixa in caixas)
+        {
+            caixa.MostrarRevistasCadastradasSemMensagem();
+        }
+
+        Console.Write($"Digite o nome da revista que o amigo {amigo} fará a Reserva: ");
+        string Revista = Console.ReadLine() ?? "";
+
+        foreach (var emprestimo in emprestimos)
+        {
+            if (emprestimo.getAmigo().ToLower() == amigo.ToLower() && (emprestimo.getStatus() == "Aberto" || emprestimo.getStatus() == "Atrasado"))
+            {
+                Console.WriteLine($"Amigo {amigo} já tem um emprestimo cadastrado não devolvido");
+
+                if (emprestimo.getStatus() == "Aberto")
+                {
+                    Console.WriteLine($"Amigo: {emprestimo.getAmigo}, Revista: {emprestimo.getRevista}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data a ser Devolvida: {emprestimo.getDataDevolucao().ToString("dd/MM/yyyy")}, Status: {emprestimo.getStatus()}");
+                }
+                else
+                {
+                    if (emprestimo.getStatus() == "Atrasado")
+                    {
+                        Console.WriteLine($"Amigo: {emprestimo.getAmigo}, Revista: {emprestimo.getRevista}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data que deveria ser Devolvida: {emprestimo.getDataDevolucao().ToString("dd/MM/yyyy")}, Dias em Atraso: {emprestimo.DiasEmAtraso()}, Status: {emprestimo.getStatus()}");
+                    }
+                }
+
+                return "";
+            }
+        }
+
+        return Revista;
+
+    }
 
     #endregion
 
@@ -1677,8 +1719,194 @@ class Usuario
     #endregion
 
     #region Métodos Reserva
+    public bool RetirarReserva()
+    {
+        MostrarReservas();
 
-    
+        string amigo = "";
+        int DiasEmprestimo = 0;
+
+        Console.Write("Digite o nome do amigo que deseja retirar a reserva: ");
+        amigo = Console.ReadLine() ?? "";
+
+        if (amigo != "")
+        {
+            foreach (var reserva in reservas.ToList())
+            {
+                if (reserva.getNomeAmigo().ToLower() == amigo.ToLower())
+                {
+
+                    int verificarDiasEmprestimos = 0;
+
+                    foreach (var caixa in caixas)
+                    {
+                        verificarDiasEmprestimos = caixa.verificaRevistaReserva(reserva.getNomeRevista());
+
+                        if (verificarDiasEmprestimos > 0)
+                        {
+                            DiasEmprestimo = verificarDiasEmprestimos;
+                        }
+                    }
+
+                    Emprestimo emprestimo = new Emprestimo(reserva.getNomeAmigo(), reserva.getNomeRevista(), DiasEmprestimo);
+
+                    emprestimos.Add(emprestimo);
+                    Console.WriteLine($"Reserva retirada com Sucesso! Amigo: {reserva.getNomeAmigo()}, Revista: {reserva.getNomeRevista()}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data a ser Devolvida: {emprestimo.getDataDevolucao().ToString("dd/MM/yyyy")}, Status: {emprestimo.getStatus()}");
+
+                    reservas.Remove(reserva);
+
+                    return true;
+                }
+            }
+
+            Console.WriteLine("Amigo não encontrado, por favor tente novamente!");
+            return false;
+        }
+        else
+        {
+            Console.WriteLine("Nome do Amigo Vazia, tente Novamente!");
+            return false;
+        }
+    }
+    public bool CancelarReserva()
+    {
+        string amigo = "";
+
+        MostrarAmigosCadastrados();
+
+        Console.Write("Digite o nome do amigo que deseja cancelar a reserva: ");
+        amigo = Console.ReadLine() ?? "";
+
+        if (amigo != "")
+        {
+            foreach (var reserva in reservas.ToList())
+            {
+                if (reserva.getNomeAmigo().ToLower() == amigo.ToLower())
+                {
+                    foreach (var caixa in caixas)
+                    {
+                        caixa.DevolverRevista(reserva.getNomeRevista());
+                    }
+
+                    reservas.Remove(reserva);
+
+                    Console.WriteLine("Reserva cancelada com sucesso!");
+                    return true;
+                }
+            }
+
+            Console.WriteLine("Amigo não encontrado, por favor tente novamente!");
+            return false;
+        }
+        else
+        {
+            Console.WriteLine("Nome do Amigo Vazia, tente Novamente!");
+            return false;
+        }
+    }
+    public bool CriarReserva()
+    {
+        string nomeAmigo = "";
+        string nomeRevista = "";
+
+        bool verificaAmigo = false;
+
+        try
+        {
+            verificaAmigo = MostrarAmigosCadastrados();
+
+            if (verificaAmigo == true)
+            {
+                Console.Write("Digite o nome do Amigo que fará a Reserva: ");
+                nomeAmigo = Console.ReadLine() ?? "";
+
+                if (nomeAmigo != "")
+                {
+                    bool amigoAchado = false;
+
+                    foreach (var amigo in amigos)
+                    {
+                        if (amigo.getNome().ToLower() == nomeAmigo.ToLower())
+                        {
+                            amigoAchado = true;
+
+                            nomeRevista = MostrarTodasAsRevistasCadastradasReserva(amigo.getNome());
+
+                            if (nomeRevista != "")
+                            {
+                                int verificarDiasEmprestimos = 0;
+
+                                foreach (var caixa in caixas)
+                                {
+                                    verificarDiasEmprestimos = caixa.verificaRevista(nomeRevista);
+
+                                    if (verificarDiasEmprestimos > 0)
+                                    {
+                                        Reserva reserva = new Reserva(nomeAmigo, nomeRevista);
+                                        reservas.Add(reserva);
+                                        Console.WriteLine($"Reserva criada com Sucesso! Amigo: {nomeAmigo}, Revista: {nomeRevista}, Data da Reserva: {reserva.getDataReserva().ToString("dd/MM/yyyy")}, Status: {reserva.getStatus()}");
+                                        return true;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Revista não Encontrada, tente novamente!");
+                                return false;
+                            }
+
+                        }
+                    }
+
+                    if (amigoAchado == false)
+                    {
+                        Console.WriteLine("Amigo não Encontrado, tente novamente!");
+                        return false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Amigo não Encontrado, tente novamente!");
+                    return false;
+                }
+
+            }
+        }
+        catch (System.Exception)
+        {
+            Console.WriteLine("Erro, verifique se os parêmetros foram passados corretamente!");
+            return false;
+        }
+
+        return false;
+    }
+    public bool MostrarReservas()
+    {
+        if (multas.Count == 0)
+        {
+            Console.WriteLine("Não há reservas cadastradas!");
+            return false;
+        }
+        else
+        {
+            bool verificaReserva = false;
+
+            foreach (var reserva in reservas)
+            {
+
+                if (verificaReserva == false)
+                {
+                    Console.WriteLine("Reservas Cadastradas:");
+                    verificaReserva = true;
+                }
+
+                Console.WriteLine($"Amigo: {reserva.getNomeAmigo()}, Revista: {reserva.getNomeRevista()}, Data da Reserva: {reserva.getDataReserva().ToString("dd/MM/yyyy")}");
+
+            }
+
+            return true;
+        }
+    }
 
     #endregion
 

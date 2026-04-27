@@ -119,7 +119,7 @@ class Program
             Console.WriteLine("---------------------------------");
             Console.Write("> ");
             opcao = (int)char.GetNumericValue(Console.ReadKey(true).KeyChar);
-        } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5);
+        } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4);
 
         return opcao;
     }
@@ -139,7 +139,7 @@ class Program
             Console.WriteLine("---------------------------------");
             Console.Write("> ");
             opcao = (int)char.GetNumericValue(Console.ReadKey(true).KeyChar);
-        } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5);
+        } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4);
 
         return opcao;
     }
@@ -155,7 +155,8 @@ class Program
             Console.WriteLine("1 - Criar nova Reserva");
             Console.WriteLine("2 - Cancelar uma Reserva");
             Console.WriteLine("3 - Visualizar Reservas Ativas");
-            Console.WriteLine("4 - Voltar para o início");
+            Console.WriteLine("4 - Retirar Reserva");
+            Console.WriteLine("5 - Voltar para o início");
             Console.WriteLine("---------------------------------");
             Console.Write("> ");
             opcao = (int)char.GetNumericValue(Console.ReadKey(true).KeyChar);
@@ -499,6 +500,16 @@ class Program
                                 Console.ReadLine();
                                 break;
                             case 4:
+                                verificaReserva = usuario.RetirarReserva();
+                                if (verificaReserva == true)
+                                {
+                                    salvarUsuario(usuario);
+                                }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
+                                break;
+                            case 5:
                                 Console.WriteLine("Voltando...");
                                 Thread.Sleep(3000);
                                 while (Console.KeyAvailable) Console.ReadKey(true);
@@ -506,7 +517,7 @@ class Program
                                 break;
                         }
 
-                    } while (opcaoReserva != 4);
+                    } while (opcaoReserva != 5);
 
                     #endregion
                     break;

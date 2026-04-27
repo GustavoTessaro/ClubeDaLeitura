@@ -179,6 +179,18 @@ class Caixa
         }
         return 0;
     }
+
+    public int verificaRevistaReserva(string nome)
+    {
+        foreach (var revista in revistas)
+        {
+            if (revista.getTitulo().ToLower() == nome.ToLower())
+            {
+                return this.DiasEmprestimo;
+            }
+        }
+        return 0;
+    }
     public void DevolverRevista(string nome)
     {
         foreach (var revista in revistas)
