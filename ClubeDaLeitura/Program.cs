@@ -31,11 +31,12 @@ class Program
             Console.WriteLine("3 - Gerenciar Amigos");
             Console.WriteLine("4 - Gerenciar Empréstimos");
             Console.WriteLine("5 - Gerenciar Multas");
-            Console.WriteLine("6 - Sair");
+            Console.WriteLine("6 - Gerenciar Reservas");
+            Console.WriteLine("7 - Sair");
             Console.WriteLine("---------------------------------");
             Console.Write("> ");
             opcao = (int)char.GetNumericValue(Console.ReadKey(true).KeyChar);
-        } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5);
+        } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5 && opcao != 6 && opcao != 7);
 
         return opcao;
     }
@@ -134,6 +135,26 @@ class Program
             Console.WriteLine("1 - Visualizar Multas em Aberto");
             Console.WriteLine("2 - Quitar uma Multa");
             Console.WriteLine("3 - Visualizar Multas de um Amigo");
+            Console.WriteLine("4 - Voltar para o início");
+            Console.WriteLine("---------------------------------");
+            Console.Write("> ");
+            opcao = (int)char.GetNumericValue(Console.ReadKey(true).KeyChar);
+        } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5);
+
+        return opcao;
+    }
+    static int ObterEscolhaMenuReservas()
+    {
+        int opcao = 0;
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Gestão de Reservas");
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("1 - Criar nova Reserva");
+            Console.WriteLine("2 - Cancelar uma Reserva");
+            Console.WriteLine("3 - Visualizar Reservas Ativas");
             Console.WriteLine("4 - Voltar para o início");
             Console.WriteLine("---------------------------------");
             Console.Write("> ");
@@ -441,13 +462,62 @@ class Program
                     #endregion
                     break;
                 case 6:
+                    #region Gestão de Reservas
+
+                    int opcaoReserva = 0;
+                    bool verificaReserva = false;
+
+                    do
+                    {
+                        opcaoReserva = ObterEscolhaMenuReservas();
+
+                        switch (opcaoReserva)
+                        {
+                            case 1:
+                                verificaReserva = usuario.CriarReserva();
+                                if (verificaReserva == true)
+                                {
+                                    salvarUsuario(usuario);
+                                }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
+                                break;
+                            case 2:
+                                verificaReserva = usuario.CancelarReserva();
+                                if (verificaReserva == true)
+                                {
+                                    salvarUsuario(usuario);
+                                }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
+                                break;
+                            case 3:
+                                usuario.MostrarReservas();
+                                Console.WriteLine("\nPrecione ENTER para continuar");
+                                Console.ReadLine();
+                                break;
+                            case 4:
+                                Console.WriteLine("Voltando...");
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
+                                break;
+                        }
+
+                    } while (opcaoReserva != 4);
+
+                    #endregion
+                    break;
+                case 7:
                     Console.WriteLine("Fechando o Programa...");
                     Thread.Sleep(3000);
                     while (Console.KeyAvailable) Console.ReadKey(true);
                     Console.Clear();
                     break;
             }
-        } while (opcao != 6);
+        } while (opcao != 7);
 
     }
 

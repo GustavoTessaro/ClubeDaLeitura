@@ -8,6 +8,7 @@ class Usuario
     private List<Amigo> amigos;
     private List<Emprestimo> emprestimos;
     private List<Multa> multas;
+    private List<Reserva> reservas;
 
     #region Construtores
     public Usuario()
@@ -19,12 +20,21 @@ class Usuario
         this.amigos = new List<Amigo>();
         this.emprestimos = new List<Emprestimo>();
         this.multas = new List<Multa>();
+        this.reservas = new List<Reserva>();
     }
 
     #endregion
 
     #region Getters e Setters
 
+    public List<Reserva> GetReservas()
+    {
+        return this.reservas;
+    }
+    public void SetReservas(List<Reserva> reservas)
+    {
+        this.reservas = reservas;
+    }
     public void setMulta(List<Multa> multas)
     {
         this.multas = multas;
@@ -104,6 +114,9 @@ class Usuario
 
     [JsonPropertyName("multas")]
     public List<Multa> Multas_JSON { get => GetMultas(); set => setMulta(value); }
+
+    [JsonPropertyName("reservas")]
+    public List<Reserva> Reservas_JSON { get => GetReservas(); set => SetReservas(value); }
 
     #endregion
 
@@ -1481,7 +1494,6 @@ class Usuario
     #endregion
 
     #region Métodos Multas
-
     public bool verificaMulta(string amigo)
     {
         if (multas.Count == 0)
@@ -1546,7 +1558,6 @@ class Usuario
             return true;
         }
     }
-
     public bool QuitarUmaMulta()
     {
         if (multas.Count == 0)
@@ -1609,7 +1620,6 @@ class Usuario
             return true;
         }
     }
-
     public bool MostrarMultasDeUmAmigo()
     {
         if (multas.Count == 0)
@@ -1663,6 +1673,12 @@ class Usuario
             return true;
         }
     }
+
+    #endregion
+
+    #region Métodos Reserva
+
+    
 
     #endregion
 
