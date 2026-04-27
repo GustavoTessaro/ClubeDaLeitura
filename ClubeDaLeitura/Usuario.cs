@@ -2,7 +2,6 @@ using System.Text.Json.Serialization;
 
 class Usuario
 {
-
     private string nome;
     private string senha;
     private List<Caixa> caixas;
@@ -109,7 +108,6 @@ class Usuario
     #endregion
 
     #region Métodos Caixa
-
     public bool verificarCaixasCadastradas()
     {
         if (caixas.Count == 0)
@@ -691,7 +689,6 @@ class Usuario
     #endregion
 
     #region Métodos Amigo
-
     public bool VerificarAmigos(string nome)
     {
         bool verifica = false;
@@ -705,7 +702,6 @@ class Usuario
         }
         return verifica;
     }
-
     public bool VerificarTelefoneExistente(string telefone)
     {
         bool verifica = false;
@@ -1469,6 +1465,159 @@ class Usuario
                     }
                 }
             }
+            return true;
+        }
+    }
+
+    #endregion
+
+    #region Métodos Multas
+
+    public bool MostrarMultasEmAberto()
+    {
+        if (multas.Count == 0)
+        {
+            Console.WriteLine("Não há multas cadastradas!");
+            return false;
+        }
+        else
+        {
+            bool verificaMulta = false;
+
+            foreach (var multa in multas)
+            {
+                if (multa.getstatus() != "Quitada")
+                {
+
+                    if (verificaMulta == false)
+                    {
+                        Console.WriteLine("Multas Cadastradas:");
+                        verificaMulta = true;
+                    }
+
+                    Console.WriteLine($"Amigo: {multa.getNomeAmigo()}, Revista: {multa.getnomeRevista()}, Valor da Multa: R$ {multa.getvalorMulta()}");
+                }
+            }
+
+            return true;
+        }
+    }
+
+    public bool QuitarUmaMulta()
+    {
+        if (multas.Count == 0)
+        {
+            Console.WriteLine("Não há multas cadastradas!");
+            return false;
+        }
+        else
+        {
+            bool amigosCadastrados = MostrarAmigosCadastrados();
+
+            if (amigosCadastrados == false)
+            {
+                Console.WriteLine("Não há amigos cadastrados!");
+            }
+
+            string nomeAmigo = "";
+
+            Console.Write("Digite o nome do Amigo que deseja Quitar a multa: ");
+            nomeAmigo = Console.ReadLine() ?? "";
+
+            if (nomeAmigo == "")
+            {
+                Console.WriteLine("Campo vazio, tente novamente!");
+                return false;
+            }
+
+            bool verificaMulta = false;
+
+            foreach (var multa in multas)
+            {
+                if (multa.getstatus() != "Quitada" && multa.getNomeAmigo().ToLower() == nomeAmigo.ToLower())
+                {
+                    verificaMulta = true;
+
+                    Console.WriteLine($"Amigo: {multa.getNomeAmigo()}, Revista: {multa.getnomeRevista()}, Valor da Multa: R$ {multa.getvalorMulta()}");
+
+                    bool verificaPagamento = false;
+
+                    Console.WriteLine($"O amigo {nomeAmigo} já realizou o pagamento da multa no valor de R${multa.getvalorMulta()} ? (S/N)");
+                    char resposta = char.ToUpper(Console.ReadKey(true).KeyChar);
+
+                    if (resposta == 'S')
+                    {
+                        multa.setStatus("Quitada");
+                        return true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Cancelando Pagamento...");
+                        return false;
+                    }
+                }
+            }
+
+            if (verificaMulta == false)
+            {
+                Console.WriteLine($"Amigo {nomeAmigo} não possui multas cadastradas!");
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+    public bool MostrarMultasDeUmAmigo()
+    {
+        if (multas.Count == 0)
+        {
+            Console.WriteLine("Não há multas cadastradas!");
+            return false;
+        }
+        else
+        {
+            bool amigosCadastrados = MostrarAmigosCadastrados();
+
+            if (amigosCadastrados == false)
+            {
+                Console.WriteLine("Não há amigos cadastrados!");
+            }
+
+            string nomeAmigo = "";
+
+            Console.Write("Digite o nome do Amigo que deseja visualizar multas: ");
+            nomeAmigo = Console.ReadLine() ?? "";
+
+            if (nomeAmigo == "")
+            {
+                Console.WriteLine("Campo vazio, tente novamente!");
+                return false;
+            }
+
+            bool verificaMulta = false;
+
+            foreach (var multa in multas)
+            {
+                if (multa.getNomeAmigo().ToLower() == nomeAmigo.ToLower())
+                {
+
+                    if (verificaMulta == false)
+                    {
+                        Console.WriteLine($"Multas Cadastradas de {nomeAmigo}:");
+                        verificaMulta = true;
+                    }
+
+                    Console.WriteLine($"Amigo: {multa.getNomeAmigo()}, Revista: {multa.getnomeRevista()}, Valor da Multa: R$ {multa.getvalorMulta()}, Status: {multa.getstatus()}");
+                }
+            }
+
+            if (verificaMulta == false)
+            {
+                Console.WriteLine($"Amigo {nomeAmigo} não possui multas cadastradas!");
+                return false;
+            }
+
             return true;
         }
     }

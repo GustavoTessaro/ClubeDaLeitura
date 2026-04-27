@@ -30,7 +30,8 @@ class Program
             Console.WriteLine("2 - Gerenciar Revistas");
             Console.WriteLine("3 - Gerenciar Amigos");
             Console.WriteLine("4 - Gerenciar Empréstimos");
-            Console.WriteLine("S - Sair");
+            Console.WriteLine("5 - Gerenciar Multas");
+            Console.WriteLine("6 - Sair");
             Console.WriteLine("---------------------------------");
             Console.Write("> ");
             opcao = (int)char.GetNumericValue(Console.ReadKey(true).KeyChar);
@@ -113,6 +114,26 @@ class Program
             Console.WriteLine("1 - Cadastrar Empréstimo");
             Console.WriteLine("2 - Cadastrar Devolução");
             Console.WriteLine("3 - Visualizar Empréstimos");
+            Console.WriteLine("4 - Voltar para o início");
+            Console.WriteLine("---------------------------------");
+            Console.Write("> ");
+            opcao = (int)char.GetNumericValue(Console.ReadKey(true).KeyChar);
+        } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5);
+
+        return opcao;
+    }
+    static int ObterEscolhaMenuMultas()
+    {
+        int opcao = 0;
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Gestão de Multas");
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("1 - Visualizar Multas em Aberto");
+            Console.WriteLine("2 - Quitar uma Multa");
+            Console.WriteLine("3 - Visualizar Multas de um Amigo");
             Console.WriteLine("4 - Voltar para o início");
             Console.WriteLine("---------------------------------");
             Console.Write("> ");
@@ -378,13 +399,55 @@ class Program
                     #endregion
                     break;
                 case 5:
+                    #region Gestão de Multas
+                    int opcaoMulta = 0;
+                    bool verificaMulta = false;
+
+                    do
+                    {
+                        opcaoMulta = ObterEscolhaMenuMultas();
+
+                        switch (opcaoMulta)
+                        {
+                            case 1:
+                                usuario.MostrarMultasEmAberto();
+                                Console.WriteLine("\nPrecione ENTER para continuar");
+                                Console.ReadLine();
+                                break;
+                            case 2:
+                                verificaMulta = usuario.QuitarUmaMulta();
+                                if (verificaMulta == true)
+                                {
+                                    salvarUsuario(usuario);
+                                }
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
+                                break;
+                            case 3:
+                                usuario.MostrarMultasDeUmAmigo();
+                                Console.WriteLine("\nPrecione ENTER para continuar");
+                                Console.ReadLine();
+                                break;
+                            case 4:
+                                Console.WriteLine("Voltando...");
+                                Thread.Sleep(3000);
+                                while (Console.KeyAvailable) Console.ReadKey(true);
+                                Console.Clear();
+                                break;
+                        }
+
+                    } while (opcaoMulta != 4);
+                    #endregion
+                    break;
+                case 6:
                     Console.WriteLine("Fechando o Programa...");
                     Thread.Sleep(3000);
                     while (Console.KeyAvailable) Console.ReadKey(true);
                     Console.Clear();
                     break;
             }
-        } while (opcao != 5);
+        } while (opcao != 6);
 
     }
 
