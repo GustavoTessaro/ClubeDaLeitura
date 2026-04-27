@@ -8,6 +8,7 @@ class Usuario
     private List<Caixa> caixas;
     private List<Amigo> amigos;
     private List<Emprestimo> emprestimos;
+    private List<Multa> multas;
 
     #region Construtores
     public Usuario()
@@ -18,12 +19,21 @@ class Usuario
 
         this.amigos = new List<Amigo>();
         this.emprestimos = new List<Emprestimo>();
+        this.multas = new List<Multa>();
     }
 
     #endregion
 
     #region Getters e Setters
 
+    public void setMulta(List<Multa> multas)
+    {
+        this.multas = multas;
+    }
+    public List<Multa> GetMultas()
+    {
+        return this.multas;
+    }
     public string GetNome()
     {
         return this.nome;
@@ -92,6 +102,9 @@ class Usuario
 
     [JsonPropertyName("emprestimos")]
     public List<Emprestimo> Emprestimos_JSON { get => GetEmprestimos(); set => SetEmprestimos(value); }
+
+    [JsonPropertyName("multas")]
+    public List<Multa> Multas_JSON { get => GetMultas(); set => setMulta(value); }
 
     #endregion
 
@@ -1208,7 +1221,88 @@ class Usuario
 
                     Console.WriteLine($"Amigo: {emprestimo.getAmigo()}, Revista: {emprestimo.getRevista()}, Data do Empréstimo: {emprestimo.getDataEmprestimo().ToString("dd/MM/yyyy")}, Data que deveria ser Devolvida: {emprestimo.getDataDevolucao().ToString("dd/MM/yyyy")}, Dias em Atraso: {emprestimo.DiasEmAtraso()}, Status: {emprestimo.getStatus()}");
 
+                    string NomeAmigo = emprestimo.getAmigo();
+                    string NomeRevista = emprestimo.getRevista();
+
+                    if (multas.Count != 0)
+                    {
+                        bool verificaMulta = false;
+
+                        foreach (var multa in multas)
+                        {
+                            if (multa.getstatus() != "Quitada" && multa.getNomeAmigo() == NomeAmigo && multa.getnomeRevista() == NomeRevista)
+                            {
+                                float valorMulta = 2 * emprestimo.DiasEmAtrasoInt();
+                                multa.setvalorMulta(valorMulta);
+
+                                verificaMulta = true;
+                            }
+                        }
+
+                        if (verificaMulta == false)
+                        {
+                            float valorMulta = 2 * emprestimo.DiasEmAtrasoInt();
+
+                            Multa multa = new Multa(NomeAmigo, NomeRevista, valorMulta);
+
+                            multas.Add(multa);
+                        }
+                    }
+                    else
+                    {
+                        float valorMulta = 2 * emprestimo.DiasEmAtrasoInt();
+
+                        Multa multa = new Multa(NomeAmigo, NomeRevista, valorMulta);
+
+                        multas.Add(multa);
+                    }
+
                     verificaAtraso = true;
+                }
+                else
+                {
+                    if (emprestimo.getStatus() != "Concluído" && DateTime.Now > emprestimo.getDataDevolucao())
+                    {
+                        string NomeAmigo = emprestimo.getAmigo();
+                        string NomeRevista = emprestimo.getRevista();
+
+                        if (multas.Count != 0)
+                        {
+                            bool verificaMulta = false;
+
+                            foreach (var multa in multas)
+                            {
+                                if (multa.getstatus() != "Quitada" && multa.getNomeAmigo() == NomeAmigo && multa.getnomeRevista() == NomeRevista)
+                                {
+                                    float valorMulta = 2 * emprestimo.DiasEmAtrasoInt();
+                                    multa.setvalorMulta(valorMulta);
+
+                                    verificaMulta = true;
+                                }
+                            }
+
+                            if (verificaMulta == false)
+                            {
+                                float valorMulta = 2 * emprestimo.DiasEmAtrasoInt();
+
+                                Multa multa = new Multa(NomeAmigo, NomeRevista, valorMulta);
+
+                                multas.Add(multa);
+                            }
+
+                            verificaAtraso = true;
+                        }
+                        else
+                        {
+                            float valorMulta = 2 * emprestimo.DiasEmAtrasoInt();
+
+                            Multa multa = new Multa(NomeAmigo, NomeRevista, valorMulta);
+
+                            multas.Add(multa);
+
+                            verificaAtraso = true;
+                        }
+                    }
                 }
             }
 

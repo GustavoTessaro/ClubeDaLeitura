@@ -129,6 +129,15 @@ class Emprestimo
         return dias.ToString();
     }
 
+    public int DiasEmAtrasoInt()
+    {
+        TimeSpan diferenca = DateTime.Now - this.dataDevolucao;
+
+        int dias = diferenca.Days > 0 ? diferenca.Days : 0;
+
+        return dias;
+    }
+
     #endregion
 
 }
